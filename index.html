@@ -1,709 +1,601 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Rocket, 
-  Gamepad2, 
-  Send, 
-  Twitter, 
-  Copy, 
-  Check, 
-  Play, 
-  Pause, 
-  RotateCcw, 
-  ArrowUp, 
-  ShieldCheck, 
-  Zap, 
-  Users, 
-  ChevronRight,
-  Sparkles,
-  Volume2,
-  VolumeX,
-  Menu,
-  X
-} from "lucide-react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUCK — The Duck Has Landed on SUI 🦆💧</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="min-h-screen bg-[#070b12] text-white font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden relative">
+    
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+    <div class="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[150px] pointer-events-none -z-10"></div>
+    <div class="absolute bottom-1/4 left-1/3 w-80 h-80 bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
 
-export default function DuckApp() {
-  const [copied, setCopied] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const caText = "COMING SOON";
-
-  const handleCopy = () => {
-    if (caText === "COMING SOON") return;
-    navigator.clipboard.writeText(caText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <div className="min-h-screen bg-[#070b12] text-white font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden relative">
-      {/* Background Ambient Glows & Floating Bubbles */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse" />
-      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[150px] pointer-events-none -z-10" />
-      <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none -z-10" />
-
-      {/* Navigation Bar */}
-      <nav className="sticky top-0 z-50 backdrop-blur-xl bg-[#070b12]/80 border-b border-white/10 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <motion.div 
-              whileHover={{ scale: 1.05, rotate: 5 }}
-              className="w-10 h-10 rounded-2xl overflow-hidden border-2 border-cyan-400/40 shadow-[0_0_15px_rgba(6,182,212,0.4)]"
-            >
-              <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="DUCK Logo" className="w-full h-full object-cover" />
-            </motion.div>
-            <span className="text-xl font-black tracking-wider bg-gradient-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent">
-              $DUCK
-            </span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-            <a href="#hero" className="hover:text-cyan-400 transition-colors">Home</a>
-            <a href="#token" className="hover:text-cyan-400 transition-colors">Tokenomics</a>
-            <a href="#game" className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 text-cyan-300">
-              <Gamepad2 className="w-4 h-4" /> Duck Run
-            </a>
-            <a href="#roadmap" className="hover:text-cyan-400 transition-colors">Roadmap</a>
-            <a href="#gallery" className="hover:text-cyan-400 transition-colors">Gallery</a>
-          </div>
-
-          <div className="hidden md:flex items-center gap-4">
-            <a 
-              href="https://x.com/Duckonsui" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400"
-            >
-              <Twitter className="w-4 h-4" />
-            </a>
-            <a 
-              href="https://t.me/Duckonsui" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400"
-            >
-              <Send className="w-4 h-4" />
-            </a>
-            <a 
-              href="#game" 
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_25px_rgba(6,182,212,0.7)] transition-all transform hover:-translate-y-0.5 text-sm flex items-center gap-2"
-            >
-              <Play className="w-4 h-4 fill-black" /> PLAY GAME
-            </a>
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-gray-300"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-
-        {/* Mobile Dropdown */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div 
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden border-t border-white/10 mt-4 pt-4 pb-6 flex flex-col gap-4 px-2"
-            >
-              <a href="#hero" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Home</a>
-              <a href="#token" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Tokenomics</a>
-              <a href="#game" onClick={() => setMobileMenuOpen(false)} className="text-cyan-300 hover:text-cyan-400 py-2 flex items-center gap-2">
-                <Gamepad2 className="w-4 h-4" /> Duck Run
-              </a>
-              <a href="#roadmap" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Roadmap</a>
-              <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Gallery</a>
-              <div className="flex gap-4 pt-2">
-                <a href="https://x.com/Duckonsui" target="_blank" rel="noreferrer" className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2 text-sm font-bold">
-                  <Twitter className="w-4 h-4" /> X (Twitter)
-                </a>
-                <a href="https://t.me/Duckonsui" target="_blank" rel="noreferrer" className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2 text-sm font-bold">
-                  <Send className="w-4 h-4" /> Telegram
-                </a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
-
-      {/* HERO SECTION */}
-      <section id="hero" className="relative min-h-[90vh] flex items-center justify-center px-6 py-20 overflow-hidden">
-        {/* Floating background decorative bubbles */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full bg-cyan-400/10 border border-cyan-300/20 backdrop-blur-sm"
-              style={{
-                width: `${Math.random() * 60 + 20}px`,
-                height: `${Math.random() * 60 + 20}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [-20, -120, -20],
-                x: [0, Math.random() * 40 - 20, 0],
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                duration: Math.random() * 5 + 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="max-w-5xl mx-auto text-center relative z-10 flex flex-col items-center">
-          {/* Sui Badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-bold tracking-wider mb-8 shadow-[0_0_20px_rgba(6,182,212,0.2)]"
-          >
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-            🟦 BUILT ON SUI
-          </motion.div>
-
-          {/* Floating Logo with Glow */}
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="relative mb-8 group"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 blur-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
-            <motion.div
-              animate={{ y: [-8, 8, -8] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="relative w-36 h-36 md:w-44 md:h-44 rounded-3xl overflow-hidden border-4 border-cyan-400/50 shadow-[0_0_40px_rgba(6,182,212,0.5)] bg-slate-900"
-            >
-              <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="DUCK Hero Logo" className="w-full h-full object-cover" />
-            </motion.div>
-          </motion.div>
-
-          {/* Main Titles */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-4"
-          >
-            DUCK
-          </motion.h1>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-2xl md:text-3xl font-extrabold text-cyan-300 mb-6 flex items-center justify-center gap-2 flex-wrap"
-          >
-            The Duck Has Landed on SUI. 🦆💧
-          </motion.div>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-gray-400 text-base md:text-lg max-w-2xl mb-10 font-medium leading-relaxed"
-          >
-            A legendary duck, a chaotic community, and one mission — take DUCK to the moon.
-          </motion.p>
-
-          {/* Action Buttons */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-4 w-full max-w-2xl"
-          >
-            <a 
-              href="#token"
-              className="flex-1 min-w-[160px] py-4 px-6 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 font-bold text-black shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:shadow-[0_0_35px_rgba(6,182,212,0.8)] transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide"
-            >
-              BUY $DUCK
-            </a>
-            <a 
-              href="#game"
-              className="flex-1 min-w-[160px] py-4 px-6 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 hover:border-cyan-400/50 font-bold text-white transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide backdrop-blur-md flex items-center justify-center gap-2"
-            >
-              <Gamepad2 className="w-4 h-4 text-cyan-400" /> PLAY DUCK GAME
-            </a>
-            <a 
-              href="https://t.me/Duckonsui" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex-1 min-w-[140px] py-4 px-6 rounded-2xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 font-bold text-blue-300 transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide flex items-center justify-center gap-2"
-            >
-              <Send className="w-4 h-4" /> TELEGRAM
-            </a>
-            <a 
-              href="https://x.com/Duckonsui" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex-1 min-w-[140px] py-4 px-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 font-bold text-white transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide flex items-center justify-center gap-2"
-            >
-              <Twitter className="w-4 h-4" /> FOLLOW ON X
-            </a>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* WHY DUCK SECTION */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <motion.div 
-            whileHover={{ y: -8, transition: { duration: 0.2 } }}
-            className="p-8 rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 backdrop-blur-xl relative group overflow-hidden shadow-xl"
-          >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-400/10 rounded-full blur-2xl group-hover:bg-yellow-400/20 transition-all" />
-            <div className="w-14 h-14 rounded-2xl bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400 mb-6 text-2xl shadow-[0_0_15px_rgba(250,204,21,0.2)]">
-              🦆
-            </div>
-            <h3 className="text-xl font-bold mb-3 tracking-wide text-white">MEME POWER</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">The internet loves ducks. Unstoppable viral energy backed by unhinged community creativity.</p>
-          </motion.div>
-
-          <motion.div 
-            whileHover={{ y: -8, transition: { duration: 0.2 } }}
-            className="p-8 rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 backdrop-blur-xl relative group overflow-hidden shadow-xl"
-          >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-400/10 rounded-full blur-2xl group-hover:bg-cyan-400/20 transition-all" />
-            <div className="w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 mb-6 text-2xl shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-              💧
-            </div>
-            <h3 className="text-xl font-bold mb-3 tracking-wide text-white">SUI POWERED</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">Built for the SUI ecosystem with lightning-fast speeds and ultra-low transaction costs.</p>
-          </motion.div>
-
-          <motion.div 
-            whileHover={{ y: -8, transition: { duration: 0.2 } }}
-            className="p-8 rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 backdrop-blur-xl relative group overflow-hidden shadow-xl"
-          >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all" />
-            <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-6 text-2xl shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-              🔥
-            </div>
-            <h3 className="text-xl font-bold mb-3 tracking-wide text-white">COMMUNITY POWER</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">Driven by the Duck Army. Decentralized, passionate, and ready to conquer the crypto space.</p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* TOKEN SECTION */}
-      <section id="token" className="py-20 px-6 max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-black mb-3 tracking-tight">$DUCK TOKEN</h2>
-          <p className="text-gray-400 text-sm md:text-base">Transparent tokenomics designed for maximum community upside.</p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-          <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
-            <span className="text-gray-400 text-sm font-medium">Token Name</span>
-            <span className="font-bold text-white text-lg">$DUCK</span>
-          </div>
-          <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
-            <span className="text-gray-400 text-sm font-medium">Blockchain</span>
-            <span className="font-bold text-cyan-400 text-lg flex items-center gap-1.5">🟦 SUI</span>
-          </div>
-          <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
-            <span className="text-gray-400 text-sm font-medium">Community</span>
-            <span className="font-bold text-yellow-300 text-lg">Duck Army 🦆</span>
-          </div>
-          <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
-            <span className="text-gray-400 text-sm font-medium">Launch Type</span>
-            <span className="font-bold text-white text-lg">Fair & Community Driven</span>
-          </div>
-        </div>
-
-        {/* Contract Address Box */}
-        <div className="p-8 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-blue-600/10 to-purple-600/10 border border-cyan-500/30 backdrop-blur-xl text-center shadow-2xl">
-          <h3 className="text-xs font-bold text-cyan-400 tracking-widest uppercase mb-3">Contract Address</h3>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 bg-black/40 p-4 rounded-2xl border border-white/10 max-w-2xl mx-auto">
-            <span className="font-mono text-lg md:text-xl font-bold tracking-wider text-white">
-              {caText}
-            </span>
-            {caText !== "COMING SOON" && (
-              <button 
-                onClick={handleCopy}
-                className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(6,182,212,0.4)]"
-              >
-                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                {copied ? "COPIED!" : "COPY CA"}
-              </button>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* DUCK GAME SECTION */}
-      <section id="game" className="py-20 px-4 max-w-5xl mx-auto">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-bold mb-3">
-            <Gamepad2 className="w-3.5 h-3.5" /> ARCADE MINI-GAME
-          </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-2">DUCK RUN 🦆</h2>
-          <p className="text-gray-400 text-sm">Jump obstacles, collect SUI crystals, and achieve legendary high scores!</p>
-        </div>
-
-        <DuckGameContainer />
-      </section>
-
-      {/* ROADMAP SECTION */}
-      <section id="roadmap" className="py-20 px-6 max-w-5xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-black mb-3 tracking-tight">ROADMAP</h2>
-          <p className="text-gray-400 text-sm md:text-base">The strategic flight path of the DUCK revolution.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-          {/* Phase 1 */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="p-8 rounded-3xl bg-white/[0.03] border border-cyan-500/30 backdrop-blur-xl relative flex flex-col justify-between shadow-xl overflow-hidden group"
-          >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-bl-full pointer-events-none" />
-            <div>
-              <div className="inline-block px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold mb-4 border border-cyan-500/20">
-                PHASE 01
-              </div>
-              <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                THE DUCK ARRIVES 🥚
-              </h3>
-              <ul className="space-y-3 text-gray-300 text-sm">
-                <li className="flex items-center gap-2">✓ Duck launches on SUI</li>
-                <li className="flex items-center gap-2">✓ Website goes live</li>
-                <li className="flex items-center gap-2">✓ Community begins</li>
-                <li className="flex items-center gap-2">✓ Duck Army forms</li>
-              </ul>
-            </div>
-            <div className="mt-8 pt-4 border-t border-white/10 text-xs font-semibold text-cyan-400 uppercase tracking-wider">
-              Status: COMPLETED
-            </div>
-          </motion.div>
-
-          {/* Phase 2 */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="p-8 rounded-3xl bg-gradient-to-b from-cyan-500/10 to-white/[0.03] border border-cyan-400/50 backdrop-blur-xl relative flex flex-col justify-between shadow-[0_0_30px_rgba(6,182,212,0.15)] overflow-hidden group"
-          >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-400/20 rounded-bl-full pointer-events-none" />
-            <div>
-              <div className="inline-block px-3 py-1 rounded-full bg-cyan-400/20 text-cyan-300 text-xs font-bold mb-4 border border-cyan-400/30">
-                PHASE 02
-              </div>
-              <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-white">
-                DUCK TAKEOVER 🦆
-              </h3>
-              <ul className="space-y-3 text-gray-200 text-sm">
-                <li className="flex items-center gap-2">⚡ Community expansion</li>
-                <li className="flex items-center gap-2">⚡ Viral marketing campaigns</li>
-                <li className="flex items-center gap-2">⚡ Duck Game launch</li>
-                <li className="flex items-center gap-2">⚡ Memes everywhere</li>
-              </ul>
-            </div>
-            <div className="mt-8 pt-4 border-t border-white/10 text-xs font-semibold text-cyan-300 uppercase tracking-wider animate-pulse">
-              Status: ACTIVE NOW
-            </div>
-          </motion.div>
-
-          {/* Phase 3 */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl relative flex flex-col justify-between shadow-xl overflow-hidden group"
-          >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-bl-full pointer-events-none" />
-            <div>
-              <div className="inline-block px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold mb-4 border border-blue-500/20">
-                PHASE 03
-              </div>
-              <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                DUCK TO THE MOON 🚀
-              </h3>
-              <ul className="space-y-3 text-gray-300 text-sm">
-                <li className="flex items-center gap-2">• Major community milestones</li>
-                <li className="flex items-center gap-2">• Strategic partnerships</li>
-                <li className="flex items-center gap-2">• Expanded ecosystem games</li>
-                <li className="flex items-center gap-2">• Global dominance</li>
-              </ul>
-            </div>
-            <div className="mt-8 pt-4 border-t border-white/10 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-              Status: UPCOMING
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* DUCK GALLERY SECTION */}
-      <section id="gallery" className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-black mb-3 tracking-tight">DUCK GALLERY</h2>
-          <p className="text-gray-400 text-sm md:text-base">The official visual identity and legendary artwork of the Duck Army.</p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            { title: "Duck Army", subtitle: "United We Quack", badge: "Army" },
-            { title: "Duck Mode", subtitle: "Full Send Activated", badge: "Classic" },
-            { title: "SUI Duck", subtitle: "Native Ecosystem King", badge: "SUI" },
-            { title: "Moon Duck", subtitle: "Trajectory Confirmed", badge: "Space" },
-            { title: "Legendary Duck", subtitle: "One of a Kind", badge: "Rare" },
-            { title: "Cyber Duck", subtitle: "Web3 Future State", badge: "Cyber" }
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ duration: 0.2 }}
-              className="p-4 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl group relative overflow-hidden shadow-xl"
-            >
-              <div className="relative h-64 rounded-2xl overflow-hidden mb-4 border border-white/10 bg-slate-900">
-                <img 
-                  src="https://i.imgur.com/ZctdcjE.jpeg" 
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-cyan-300">
-                  {item.badge}
+    <nav class="sticky top-0 z-50 backdrop-blur-xl bg-[#070b12]/80 border-b border-white/10 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl overflow-hidden border-2 border-cyan-400/40 shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+                    <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="DUCK Logo" class="w-full h-full object-cover">
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-              </div>
-              <div className="px-2 pb-2">
-                <h3 className="text-lg font-bold text-white mb-1">{item.title}</h3>
-                <p className="text-xs text-gray-400 font-medium">{item.subtitle}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* COMMUNITY SECTION */}
-      <section className="py-20 px-6 max-w-5xl mx-auto">
-        <div className="p-10 md:p-16 rounded-3xl bg-gradient-to-br from-cyan-500/20 via-blue-600/10 to-purple-600/20 border border-cyan-500/30 backdrop-blur-2xl text-center relative overflow-hidden shadow-2xl">
-          <div className="absolute -top-24 -right-24 w-72 h-72 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none" />
-          
-          <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">JOIN THE DUCK ARMY 🦆</h2>
-          <p className="text-gray-300 text-base md:text-lg max-w-xl mx-auto mb-8 font-medium">
-            The Duck is already swimming. Are you joining?
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <a 
-              href="https://x.com/Duckonsui" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="px-8 py-4 rounded-2xl bg-white text-black font-extrabold hover:bg-cyan-100 transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center gap-2.5 text-sm"
-            >
-              <Twitter className="w-4 h-4 fill-black" /> FOLLOW ON X
-            </a>
-            <a 
-              href="https://t.me/Duckonsui" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-extrabold shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:shadow-[0_0_35px_rgba(6,182,212,0.7)] transition-all transform hover:-translate-y-1 flex items-center gap-2.5 text-sm"
-            >
-              <Send className="w-4 h-4 fill-black" /> JOIN TELEGRAM
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CTA SECTION */}
-      <section className="py-20 px-6 max-w-5xl mx-auto text-center relative">
-        <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
-          <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="Watermark" className="w-[500px] h-[500px] object-contain rounded-full" />
-        </div>
-
-        <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-4 relative z-10">
-          DUCK IS COMING. 🦆
-        </h2>
-        <p className="text-cyan-300 font-bold tracking-widest text-sm uppercase mb-8 relative z-10">
-          SUI × DUCK × COMMUNITY
-        </p>
-
-        <div className="flex flex-wrap items-center justify-center gap-4 relative z-10">
-          <a 
-            href="#token"
-            className="px-8 py-4 rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-black font-extrabold transition-all transform hover:-translate-y-1 shadow-[0_0_25px_rgba(6,182,212,0.5)] text-sm"
-          >
-            BUY $DUCK
-          </a>
-          <a 
-            href="#game"
-            className="px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 hover:border-cyan-400 font-extrabold text-white transition-all transform hover:-translate-y-1 backdrop-blur-md flex items-center gap-2 text-sm"
-          >
-            <Gamepad2 className="w-4 h-4 text-cyan-400" /> PLAY DUCK RUN
-          </a>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="border-t border-white/10 bg-[#05080e] py-12 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl overflow-hidden border border-cyan-400/40">
-              <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="DUCK Logo" className="w-full h-full object-cover" />
+                <span class="text-xl font-black tracking-wider bg-gradient-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent">
+                    $DUCK
+                </span>
             </div>
-            <div>
-              <span className="font-black text-lg tracking-wider text-white">DUCK</span>
-              <p className="text-xs text-gray-400">The legendary Duck on SUI. 🦆💧</p>
+
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#hero" class="hover:text-cyan-400 transition-colors">Home</a>
+                <a href="#token" class="hover:text-cyan-400 transition-colors">Tokenomics</a>
+                <a href="#game" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5 text-cyan-300">
+                    <i data-lucide="gamepad-2" class="w-4 h-4"></i> Duck Run
+                </a>
+                <a href="#roadmap" class="hover:text-cyan-400 transition-colors">Roadmap</a>
+                <a href="#gallery" class="hover:text-cyan-400 transition-colors">Gallery</a>
             </div>
-          </div>
 
-          <div className="flex items-center gap-4">
-            <a 
-              href="https://x.com/Duckonsui" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400 text-xs font-bold flex items-center gap-2"
-            >
-              <Twitter className="w-4 h-4" /> X (Twitter)
-            </a>
-            <a 
-              href="https://t.me/Duckonsui" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400 text-xs font-bold flex items-center gap-2"
-            >
-              <Send className="w-4 h-4" /> Telegram
-            </a>
-          </div>
+            <div class="hidden md:flex items-center gap-4">
+                <a href="https://x.com/Duckonsui" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400">
+                    <i data-lucide="twitter" class="w-4 h-4"></i>
+                </a>
+                <a href="https://t.me/Duckonsui" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                </a>
+                <a href="#game" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_25px_rgba(6,182,212,0.7)] transition-all transform hover:-translate-y-0.5 text-sm flex items-center gap-2">
+                    <i data-lucide="play" class="w-4 h-4 fill-black"></i> PLAY GAME
+                </a>
+            </div>
+
+            <button id="menu-toggle" class="md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-gray-300">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
         </div>
-        <div className="max-w-7xl mx-auto mt-8 pt-6 border-t border-white/5 text-center text-xs text-gray-500">
-          © 2026 DUCK ON SUI. All rights reserved. Meme coin for entertainment purposes only.
+
+        <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 mt-4 pt-4 pb-6 flex flex-col gap-4 px-2">
+            <a href="#hero" class="mobile-link text-gray-300 hover:text-cyan-400 py-2">Home</a>
+            <a href="#token" class="mobile-link text-gray-300 hover:text-cyan-400 py-2">Tokenomics</a>
+            <a href="#game" class="mobile-link text-cyan-300 hover:text-cyan-400 py-2 flex items-center gap-2">
+                <i data-lucide="gamepad-2" class="w-4 h-4"></i> Duck Run
+            </a>
+            <a href="#roadmap" class="mobile-link text-gray-300 hover:text-cyan-400 py-2">Roadmap</a>
+            <a href="#gallery" class="mobile-link text-gray-300 hover:text-cyan-400 py-2">Gallery</a>
+            <div class="flex gap-4 pt-2">
+                <a href="https://x.com/Duckonsui" target="_blank" rel="noreferrer" class="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2 text-sm font-bold">
+                    <i data-lucide="twitter" class="w-4 h-4"></i> X
+                </a>
+                <a href="https://t.me/Duckonsui" target="_blank" rel="noreferrer" class="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2 text-sm font-bold">
+                    <i data-lucide="send" class="w-4 h-4"></i> Telegram
+                </a>
+            </div>
         </div>
-      </footer>
-    </div>
-  );
-}
+    </nav>
 
-// ---------------------------------------------------------
-// DUCK RUN GAME COMPONENT (Fully Playable HTML5 Canvas Arcade)
-// ---------------------------------------------------------
-function DuckGameContainer() {
-  const canvasRef = useRef(null);
-  const [gameState, setGameState] = useState("START"); // START, PLAYING, PAUSED, GAMEOVER
-  const [score, setScore] = useState(0);
-  const [coins, setCoins] = useState(0);
-  const [distance, setDistance] = useState(0);
-  const [highScore, setHighScore] = useState(0);
+    <section id="hero" class="relative min-h-[90vh] flex items-center justify-center px-6 py-20 overflow-hidden">
+        <div class="max-w-5xl mx-auto text-center relative z-10 flex flex-col items-center">
+            
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-bold tracking-wider mb-8 shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                🟦 BUILT ON SUI
+            </div>
 
-  // Game references for loop state management without re-triggering renders
-  const stateRef = useRef({
-    score: 0,
-    coins: 0,
-    distance: 0,
-    speed: 6,
-    duck: { x: 60, y: 0, vy: 0, width: 45, height: 40, isJumping: false },
-    obstacles: [],
-    collectibles: [],
-    particles: [],
-    clouds: [],
-    frame: 0
-  });
+            <div class="relative mb-8 group">
+                <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 blur-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-500"></div>
+                <div class="relative w-36 h-36 md:w-44 md:h-44 rounded-3xl overflow-hidden border-4 border-cyan-400/50 shadow-[0_0_40px_rgba(6,182,212,0.5)] bg-slate-900 animate-bounce">
+                    <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="DUCK Hero Logo" class="w-full h-full object-cover">
+                </div>
+            </div>
 
-  // Initialize clouds & background elements
-  useEffect(() => {
-    const s = stateRef.current;
-    s.clouds = [
-      { x: 100, y: 50, speed: 0.5, size: 60 },
-      { x: 350, y: 80, speed: 0.3, size: 80 },
-      { x: 600, y: 40, speed: 0.6, size: 50 }
-    ];
-  }, []);
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-4">DUCK</h1>
+            <div class="text-2xl md:text-3xl font-extrabold text-cyan-300 mb-6 flex items-center justify-center gap-2 flex-wrap">
+                The Duck Has Landed on SUI. 🦆💧
+            </div>
+            <p class="text-gray-400 text-base md:text-lg max-w-2xl mb-10 font-medium leading-relaxed">
+                A legendary duck, a chaotic community, and one mission — take DUCK to the moon.
+            </p>
 
-  const startGame = () => {
-    const s = stateRef.current;
-    s.score = 0;
-    s.coins = 0;
-    s.distance = 0;
-    s.speed = 6;
-    s.duck = { x: 60, y: 220, vy: 0, width: 45, height: 40, isJumping: false };
-    s.obstacles = [];
-    s.collectibles = [];
-    s.particles = [];
-    s.frame = 0;
+            <div class="flex flex-wrap items-center justify-center gap-4 w-full max-w-2xl">
+                <a href="#token" class="flex-1 min-w-[160px] py-4 px-6 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 font-bold text-black shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:shadow-[0_0_35px_rgba(6,182,212,0.8)] transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide">
+                    BUY $DUCK
+                </a>
+                <a href="#game" class="flex-1 min-w-[160px] py-4 px-6 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 hover:border-cyan-400/50 font-bold text-white transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide backdrop-blur-md flex items-center justify-center gap-2">
+                    <i data-lucide="gamepad-2" class="w-4 h-4 text-cyan-400"></i> PLAY DUCK GAME
+                </a>
+                <a href="https://t.me/Duckonsui" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[140px] py-4 px-6 rounded-2xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 font-bold text-blue-300 transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide flex items-center justify-center gap-2">
+                    <i data-lucide="send" class="w-4 h-4"></i> TELEGRAM
+                </a>
+                <a href="https://x.com/Duckonsui" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[140px] py-4 px-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 font-bold text-white transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide flex items-center justify-center gap-2">
+                    <i data-lucide="twitter" class="w-4 h-4"></i> FOLLOW ON X
+                </a>
+            </div>
+        </div>
+    </section>
 
-    setScore(0);
-    setCoins(0);
-    setDistance(0);
-    setGameState("PLAYING");
-  };
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-8 rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 backdrop-blur-xl relative group overflow-hidden shadow-xl hover:-translate-y-2 transition-transform">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-400/10 rounded-full blur-2xl group-hover:bg-yellow-400/20 transition-all"></div>
+                <div class="w-14 h-14 rounded-2xl bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400 mb-6 text-2xl shadow-[0_0_15px_rgba(250,204,21,0.2)]">🦆</div>
+                <h3 class="text-xl font-bold mb-3 tracking-wide text-white">MEME POWER</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">The internet loves ducks. Unstoppable viral energy backed by unhinged community creativity.</p>
+            </div>
 
-  const togglePause = () => {
-    if (gameState === "PLAYING") setGameState("PAUSED");
-    else if (gameState === "PAUSED") setGameState("PLAYING");
-  };
+            <div class="p-8 rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 backdrop-blur-xl relative group overflow-hidden shadow-xl hover:-translate-y-2 transition-transform">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-400/10 rounded-full blur-2xl group-hover:bg-cyan-400/20 transition-all"></div>
+                <div class="w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 mb-6 text-2xl shadow-[0_0_15px_rgba(6,182,212,0.2)]">💧</div>
+                <h3 class="text-xl font-bold mb-3 tracking-wide text-white">SUI POWERED</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Built for the SUI ecosystem with lightning-fast speeds and ultra-low transaction costs.</p>
+            </div>
 
-  const jump = () => {
-    const s = stateRef.current;
-    if (gameState !== "PLAYING") return;
-    if (!s.duck.isJumping) {
-      s.duck.vy = -12.5;
-      s.duck.isJumping = true;
-      // Add jump particles
-      for (let i = 0; i < 5; i++) {
-        s.particles.push({
-          x: s.duck.x + 20,
-          y: s.duck.y + 40,
-          vx: (Math.random() - 0.5) * 4,
-          vy: Math.random() * 2 + 1,
-          size: Math.random() * 4 + 2,
-          color: "#38bdf8",
-          alpha: 1
+            <div class="p-8 rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 backdrop-blur-xl relative group overflow-hidden shadow-xl hover:-translate-y-2 transition-transform">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all"></div>
+                <div class="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-6 text-2xl shadow-[0_0_15px_rgba(59,130,246,0.2)]">🔥</div>
+                <h3 class="text-xl font-bold mb-3 tracking-wide text-white">COMMUNITY POWER</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Driven by the Duck Army. Decentralized, passionate, and ready to conquer the crypto space.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="token" class="py-20 px-6 max-w-5xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-5xl font-black mb-3 tracking-tight">$DUCK TOKEN</h2>
+            <p class="text-gray-400 text-sm md:text-base">Transparent tokenomics designed for maximum community upside.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
+                <span class="text-gray-400 text-sm font-medium">Token Name</span>
+                <span class="font-bold text-white text-lg">$DUCK</span>
+            </div>
+            <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
+                <span class="text-gray-400 text-sm font-medium">Blockchain</span>
+                <span class="font-bold text-cyan-400 text-lg flex items-center gap-1.5">🟦 SUI</span>
+            </div>
+            <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
+                <span class="text-gray-400 text-sm font-medium">Community</span>
+                <span class="font-bold text-yellow-300 text-lg">Duck Army 🦆</span>
+            </div>
+            <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
+                <span class="text-gray-400 text-sm font-medium">Launch Type</span>
+                <span class="font-bold text-white text-lg">Fair & Community Driven</span>
+            </div>
+        </div>
+
+        <div class="p-8 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-blue-600/10 to-purple-600/10 border border-cyan-500/30 backdrop-blur-xl text-center shadow-2xl">
+            <h3 class="text-xs font-bold text-cyan-400 tracking-widest uppercase mb-3">Contract Address</h3>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 bg-black/40 p-4 rounded-2xl border border-white/10 max-w-2xl mx-auto">
+                <span id="ca-text" class="font-mono text-lg md:text-xl font-bold tracking-wider text-white">COMING SOON</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="game" class="py-20 px-4 max-w-5xl mx-auto">
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-bold mb-3">
+                <i data-lucide="gamepad-2" class="w-3.5 h-3.5"></i> ARCADE MINI-GAME
+            </div>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-2">DUCK RUN 🦆</h2>
+            <p class="text-gray-400 text-sm">Jump obstacles, collect SUI crystals, and achieve legendary high scores!</p>
+        </div>
+
+        <div class="max-w-3xl mx-auto rounded-3xl bg-slate-900/80 border border-cyan-500/30 backdrop-blur-2xl overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.15)] relative">
+            <div class="flex items-center justify-between px-6 py-4 bg-black/50 border-b border-white/10 text-xs md:text-sm font-bold">
+                <div class="flex items-center gap-2 text-cyan-400">
+                    <i data-lucide="gamepad-2" class="w-4 h-4"></i> 🦆 DUCK RUN
+                </div>
+                <div class="flex items-center gap-6">
+                    <div>SCORE: <span id="hud-score" class="text-white font-black">0</span></div>
+                    <div class="hidden sm:block">COINS: <span id="hud-coins" class="text-yellow-400 font-black">0</span></div>
+                    <div>DIST: <span id="hud-dist" class="text-cyan-300 font-black">0m</span></div>
+                </div>
+            </div>
+
+            <div class="relative w-full aspect-[2/1] bg-[#0b1329] flex items-center justify-center overflow-hidden touch-none">
+                <canvas id="duckCanvas" width="700" height="320" class="w-full h-full object-cover"></canvas>
+
+                <div id="start-overlay" class="absolute inset-0 bg-black/80 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center">
+                    <div class="w-20 h-20 rounded-3xl overflow-hidden border-2 border-cyan-400/50 shadow-[0_0_20px_rgba(6,182,212,0.5)] mb-4">
+                        <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="Logo" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-3xl md:text-4xl font-black mb-2 tracking-tight">READY TO RUN? 🦆</h3>
+                    <p class="text-gray-400 text-xs md:text-sm max-w-md mb-6">Jump over obstacles, collect SUI crystals, and survive the ultimate SUI run!</p>
+                    <button id="start-btn" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 font-extrabold text-black shadow-[0_0_25px_rgba(6,182,212,0.6)] hover:shadow-[0_0_35px_rgba(6,182,212,0.9)] transition-all transform hover:-translate-y-1 text-sm flex items-center gap-2">
+                        <i data-lucide="play" class="w-4 h-4 fill-black"></i> START GAME
+                    </button>
+                </div>
+
+                <div id="gameover-overlay" class="absolute inset-0 bg-black/85 backdrop-blur-md hidden flex-col items-center justify-center p-6 text-center">
+                    <h3 class="text-3xl md:text-4xl font-black text-red-400 mb-2">GAME OVER 🦆💀</h3>
+                    <div class="flex gap-6 my-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+                        <div>
+                            <p class="text-xs text-gray-400">Your Score</p>
+                            <p id="final-score" class="text-xl font-bold text-white">0</p>
+                        </div>
+                        <div class="border-l border-white/10 pl-6">
+                            <p class="text-xs text-gray-400">Best Score</p>
+                            <p id="best-score" class="text-xl font-bold text-cyan-400">0</p>
+                        </div>
+                    </div>
+                    <button id="restart-btn" class="px-6 py-3.5 rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-black font-extrabold text-sm shadow-[0_0_20px_rgba(6,182,212,0.5)] transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i> PLAY AGAIN
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-4 bg-black/60 border-t border-white/10 flex items-center justify-between">
+                <div class="text-xs text-gray-400 hidden sm:block">Controls: <span class="text-cyan-400 font-bold">Space / Up Arrow</span> or tap button</div>
+                <button id="jump-btn" class="w-full sm:w-auto px-12 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 active:scale-95 transition-transform font-black text-black text-base shadow-[0_0_25px_rgba(6,182,212,0.5)] flex items-center justify-center gap-2">
+                    <i data-lucide="arrow-up" class="w-5 h-5 stroke-[3]"></i> JUMP
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="roadmap" class="py-20 px-6 max-w-5xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-black mb-3 tracking-tight">ROADMAP</h2>
+            <p class="text-gray-400 text-sm md:text-base">The strategic flight path of the DUCK revolution.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+            <div class="p-8 rounded-3xl bg-white/[0.03] border border-cyan-500/30 backdrop-blur-xl relative flex flex-col justify-between shadow-xl overflow-hidden">
+                <div>
+                    <div class="inline-block px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold mb-4 border border-cyan-500/20">PHASE 01</div>
+                    <h3 class="text-xl font-bold mb-4">THE DUCK ARRIVES 🥚</h3>
+                    <ul class="space-y-3 text-gray-300 text-sm">
+                        <li>✓ Duck launches on SUI</li>
+                        <li>✓ Website goes live</li>
+                        <li>✓ Community begins</li>
+                        <li>✓ Duck Army forms</li>
+                    </ul>
+                </div>
+                <div class="mt-8 pt-4 border-t border-white/10 text-xs font-semibold text-cyan-400 uppercase tracking-wider">Status: COMPLETED</div>
+            </div>
+
+            <div class="p-8 rounded-3xl bg-gradient-to-b from-cyan-500/10 to-white/[0.03] border border-cyan-400/50 backdrop-blur-xl relative flex flex-col justify-between shadow-[0_0_30px_rgba(6,182,212,0.15)] overflow-hidden">
+                <div>
+                    <div class="inline-block px-3 py-1 rounded-full bg-cyan-400/20 text-cyan-300 text-xs font-bold mb-4 border border-cyan-400/30">PHASE 02</div>
+                    <h3 class="text-xl font-bold mb-4 text-white">DUCK TAKEOVER 🦆</h3>
+                    <ul class="space-y-3 text-gray-200 text-sm">
+                        <li>⚡ Community expansion</li>
+                        <li>⚡ Viral marketing campaigns</li>
+                        <li>⚡ Duck Game launch</li>
+                        <li>⚡ Memes everywhere</li>
+                    </ul>
+                </div>
+                <div class="mt-8 pt-4 border-t border-white/10 text-xs font-semibold text-cyan-300 uppercase tracking-wider animate-pulse">Status: ACTIVE NOW</div>
+            </div>
+
+            <div class="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl relative flex flex-col justify-between shadow-xl overflow-hidden">
+                <div>
+                    <div class="inline-block px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold mb-4 border border-blue-500/20">PHASE 03</div>
+                    <h3 class="text-xl font-bold mb-4">DUCK TO THE MOON 🚀</h3>
+                    <ul class="space-y-3 text-gray-300 text-sm">
+                        <li>• Major community milestones</li>
+                        <li>• Strategic partnerships</li>
+                        <li>• Expanded ecosystem games</li>
+                        <li>• Global dominance</li>
+                    </ul>
+                </div>
+                <div class="mt-8 pt-4 border-t border-white/10 text-xs font-semibold text-gray-400 uppercase tracking-wider">Status: UPCOMING</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-black mb-3 tracking-tight">DUCK GALLERY</h2>
+            <p class="text-gray-400 text-sm md:text-base">The official visual identity and legendary artwork of the Duck Army.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="p-4 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl group relative overflow-hidden shadow-xl hover:-translate-y-2 transition-all">
+                <div class="relative h-64 rounded-2xl overflow-hidden mb-4 border border-white/10 bg-slate-900">
+                    <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="Duck Army" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-cyan-300">Army</div>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-1">Duck Army</h3>
+                <p class="text-xs text-gray-400 font-medium">United We Quack</p>
+            </div>
+            <div class="p-4 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl group relative overflow-hidden shadow-xl hover:-translate-y-2 transition-all">
+                <div class="relative h-64 rounded-2xl overflow-hidden mb-4 border border-white/10 bg-slate-900">
+                    <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="Duck Mode" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-cyan-300">Classic</div>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-1">Duck Mode</h3>
+                <p class="text-xs text-gray-400 font-medium">Full Send Activated</p>
+            </div>
+            <div class="p-4 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl group relative overflow-hidden shadow-xl hover:-translate-y-2 transition-all">
+                <div class="relative h-64 rounded-2xl overflow-hidden mb-4 border border-white/10 bg-slate-900">
+                    <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="SUI Duck" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-cyan-300">SUI</div>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-1">SUI Duck</h3>
+                <p class="text-xs text-gray-400 font-medium">Native Ecosystem King</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 max-w-5xl mx-auto">
+        <div class="p-10 md:p-16 rounded-3xl bg-gradient-to-br from-cyan-500/20 via-blue-600/10 to-purple-600/20 border border-cyan-500/30 backdrop-blur-2xl text-center relative overflow-hidden shadow-2xl">
+            <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">JOIN THE DUCK ARMY 🦆</h2>
+            <p class="text-gray-300 text-base md:text-lg max-w-xl mx-auto mb-8 font-medium">The Duck is already swimming. Are you joining?</p>
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="https://x.com/Duckonsui" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-2xl bg-white text-black font-extrabold hover:bg-cyan-100 transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center gap-2.5 text-sm">
+                    <i data-lucide="twitter" class="w-4 h-4 fill-black"></i> FOLLOW ON X
+                </a>
+                <a href="https://t.me/Duckonsui" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-extrabold shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:shadow-[0_0_35px_rgba(6,182,212,0.7)] transition-all transform hover:-translate-y-1 flex items-center gap-2.5 text-sm">
+                    <i data-lucide="send" class="w-4 h-4 fill-black"></i> JOIN TELEGRAM
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/10 bg-[#05080e] py-12 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl overflow-hidden border border-cyan-400/40">
+                    <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="DUCK Logo" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <span class="font-black text-lg tracking-wider text-white">DUCK</span>
+                    <p class="text-xs text-gray-400">The legendary Duck on SUI. 🦆💧</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://x.com/Duckonsui" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400 text-xs font-bold flex items-center gap-2">
+                    <i data-lucide="twitter" class="w-4 h-4"></i> X
+                </a>
+                <a href="https://t.me/Duckonsui" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400 text-xs font-bold flex items-center gap-2">
+                    <i data-lucide="send" class="w-4 h-4"></i> Telegram
+                </a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-8 pt-6 border-t border-white/5 text-center text-xs text-gray-500">
+            © 2026 DUCK ON SUI. All rights reserved. Meme coin for entertainment purposes only.
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
-      }
-    }
-  };
 
-  // Keyboard controls listener
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.code === "Space" || e.code === "ArrowUp") {
-        e.preventDefault();
-        if (gameState === "PLAYING") jump();
-        else if (gameState === "START" || gameState === "GAMEOVER") startGame();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [gameState]);
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
 
-  // Main Game Loop Effect
-  useEffect(() => {
-    if (gameState !== "PLAYING") return;
+        // HTML5 Canvas Arcade Game: DUCK RUN
+        const canvas = document.getElementById('duckCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let gameState = 'START'; // START, PLAYING, GAMEOVER
+        let score = 0, coins = 0, distance = 0, highScore = 0;
+        let speed = 6, frame = 0;
+        
+        let duck = { x: 60, y: 220, vy: 0, width: 45, height: 40, isJumping: false };
+        let obstacles = [];
+        let collectibles = [];
+        let clouds = [
+            { x: 100, y: 50, speed: 0.5, size: 60 },
+            { x: 350, y: 80, speed: 0.3, size: 80 },
+            { x: 600, y: 40, speed: 0.6, size: 50 }
+        ];
+        let particles = [];
+        const groundY = 260;
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    let animationFrameId;
+        function startGame() {
+            score = 0;
+            coins = 0;
+            distance = 0;
+            speed = 6;
+            frame = 0;
+            duck = { x: 60, y: 220, vy: 0, width: 45, height: 40, isJumping: false };
+            obstacles = [];
+            collectibles = [];
+            particles = [];
+            
+            document.getElementById('start-overlay').classList.add('hidden');
+            document.getElementById('gameover-overlay').classList.add('hidden');
+            gameState = 'PLAYING';
+        }
 
-    const groundY = 260;
+        function jump() {
+            if (gameState !== 'PLAYING') return;
+            if (!duck.isJumping) {
+                duck.vy = -12.5;
+                duck.isJumping = true;
+                for (let i = 0; i < 5; i++) {
+                    particles.push({
+                        x: duck.x + 20, y: duck.y + 40,
+                        vx: (Math.random() - 0.5) * 4, vy: Math.random() * 2 + 1,
+                        size: Math.random() * 4 + 2, color: '#38bdf8', alpha: 1
+                    });
+                }
+            }
+        }
 
-    const updateGame = () => {
-      const s = stateRef.current;
-      s.frame++;
+        document.getElementById('start-btn').addEventListener('click', startGame);
+        document.getElementById('restart-btn').addEventListener('click', startGame);
+        document.getElementById('jump-btn').addEventListener('click', jump);
 
-      // Increase speed gradually
-      s.speed = 6 + Math.floor(s.distance / 300) * 0.5;
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'ArrowUp') {
+                e.preventDefault();
+                if (gameState === 'PLAYING') jump();
+                else if (gameState === 'START' || gameState === 'GAMEOVER') startGame();
+            }
+        });
 
-      // Duck Physics
-      s.duck.vy += 0.6; // Gravity
-      s.duck.y += s.duck.vy;
+        function gameLoop() {
+            if (gameState === 'PLAYING') {
+                frame++;
+                speed = 6 + Math.floor(distance / 300) * 0.5;
 
-      if (s.duck.y > groundY - s.duck.height) {
-        s.duck.y = groundY - s.duck.height;
-        s.duck.vy = 0;
+                // Physics
+                duck.vy += 0.6;
+                duck.y += duck.vy;
+                if (duck.y > groundY - duck.height) {
+                    duck.y = groundY - duck.height;
+                    duck.vy = 0;
+                    duck.isJumping = false;
+                }
+
+                distance++;
+                score++;
+                document.getElementById('hud-score').innerText = score.toLocaleString();
+                document.getElementById('hud-coins').innerText = coins;
+                document.getElementById('hud-dist').innerText = distance + 'm';
+
+                // Spawn obstacles
+                if (frame % Math.max(70 - Math.floor(speed * 2), 35) === 0) {
+                    const types = ['rock', 'pillar', 'fire'];
+                    obstacles.push({
+                        x: canvas.width, y: groundY - 35, width: 30, height: 35, type: types[Math.floor(Math.random() * types.length)]
+                    });
+                }
+
+                // Spawn coins / crystals
+                if (frame % 50 === 0) {
+                    collectibles.push({
+                        x: canvas.width, y: groundY - (Math.random() > 0.5 ? 90 : 40), width: 22, height: 22, collected: false, type: Math.random() > 0.7 ? 'crystal' : 'coin'
+                    });
+                }
+
+                // Update obstacles
+                for (let i = obstacles.length - 1; i >= 0; i--) {
+                    let obs = obstacles[i];
+                    obs.x -= speed;
+                    if (duck.x < obs.x + obs.width - 8 && duck.x + duck.width - 8 > obs.x && duck.y < obs.y + obs.height - 6 && duck.y + duck.height - 6 > obs.y) {
+                        highScore = Math.max(highScore, score);
+                        document.getElementById('final-score').innerText = score.toLocaleString();
+                        document.getElementById('best-score').innerText = highScore.toLocaleString();
+                        document.getElementById('gameover-overlay').classList.remove('hidden');
+                        document.getElementById('gameover-overlay').classList.add('flex');
+                        gameState = 'GAMEOVER';
+                    }
+                    if (obs.x + obs.width < 0) obstacles.splice(i, 1);
+                }
+
+                // Update collectibles
+                for (let i = collectibles.length - 1; i >= 0; i--) {
+                    let col = collectibles[i];
+                    col.x -= speed;
+                    if (!col.collected && duck.x < col.x + col.width && duck.x + duck.width > col.x && duck.y < col.y + col.height && duck.y + duck.height > col.y) {
+                        col.collected = true;
+                        coins++;
+                        score += 100;
+                    }
+                    if (col.x + col.width < 0 || col.collected) collectibles.splice(i, 1);
+                }
+
+                // Update clouds
+                clouds.forEach(c => {
+                    c.x -= c.speed;
+                    if (c.x + c.size < 0) c.x = canvas.width + 50;
+                });
+
+                // Update particles
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    let p = particles[i];
+                    p.x += p.vx; p.y += p.vy; p.alpha -= 0.03;
+                    if (p.alpha <= 0) particles.splice(i, 1);
+                }
+
+                // Render Canvas Graphics
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                let skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                skyGradient.addColorStop(0, '#0b1329');
+                skyGradient.addColorStop(1, '#162544');
+                ctx.fillStyle = skyGradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Clouds
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
+                clouds.forEach(c => {
+                    ctx.beginPath();
+                    ctx.arc(c.x, c.y, c.size / 2, 0, Math.PI * 2);
+                    ctx.arc(c.x + c.size * 0.4, c.y - c.size * 0.2, c.size * 0.35, 0, Math.PI * 2);
+                    ctx.arc(c.x + c.size * 0.7, c.y, c.size * 0.3, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                // Ground & Water Line
+                ctx.fillStyle = '#06b6d4';
+                ctx.fillRect(0, groundY, canvas.width, 4);
+                let groundGrad = ctx.createLinearGradient(0, groundY + 4, 0, canvas.height);
+                groundGrad.addColorStop(0, '#0e1a30');
+                groundGrad.addColorStop(1, '#050b14');
+                ctx.fillStyle = groundGrad;
+                ctx.fillRect(0, groundY + 4, canvas.width, canvas.height - groundY);
+
+                // Obstacles
+                obstacles.forEach(obs => {
+                    ctx.fillStyle = obs.type === 'rock' ? '#334155' : '#0284c7';
+                    ctx.beginPath();
+                    ctx.roundRect(obs.x, obs.y, obs.width, obs.height, 6);
+                    ctx.fill();
+                });
+
+                // Collectibles
+                collectibles.forEach(col => {
+                    ctx.fillStyle = col.type === 'crystal' ? '#38bdf8' : '#fbbf24';
+                    ctx.beginPath();
+                    ctx.arc(col.x + 11, col.y + 11, 10, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#000';
+                    ctx.font = 'bold 10px sans-serif';
+                    ctx.fillText(col.type === 'crystal' ? '💎' : '🪙', col.x + 3, col.y + 15);
+                });
+
+                // Particles
+                particles.forEach(p => {
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.alpha;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                });
+
+                // Player Duck
+                ctx.fillStyle = '#facc15';
+                ctx.strokeStyle = '#ca8a04';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.ellipse(duck.x + 22, duck.y + 22, 20, 16, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(duck.x + 32, duck.y + 12, 12, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#f97316';
+                ctx.beginPath();
+                ctx.ellipse(duck.x + 42, duck.y + 13, 7, 4, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#000';
+                ctx.beginPath();
+                ctx.arc(duck.x + 35, duck.y + 9, 2.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            requestAnimationFrame(gameLoop);
+        }
+
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+</html>
