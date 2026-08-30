@@ -1,611 +1,709 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Menu, X, Copy, Check, ExternalLink, ChevronDown, 
-  ArrowRight, ShieldCheck, Zap, Users, Coins, 
-  Globe, Twitter, Send, Sparkles, Heart, Rocket
-} from 'lucide-react';
+  Rocket, 
+  Gamepad2, 
+  Send, 
+  Twitter, 
+  Copy, 
+  Check, 
+  Play, 
+  Pause, 
+  RotateCcw, 
+  ArrowUp, 
+  ShieldCheck, 
+  Zap, 
+  Users, 
+  ChevronRight,
+  Sparkles,
+  Volume2,
+  VolumeX,
+  Menu,
+  X
+} from "lucide-react";
 
-export default function TrickerDuckLanding() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function DuckApp() {
   const [copied, setCopied] = useState(false);
-  const [activeFaq, setActiveFaq] = useState(null);
-  const [scrollY, setScrollY] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const caText = "COMING SOON";
 
-  const contractAddress = "0xDUCKSUI...COMING_SOON";
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(contractAddress);
+  const handleCopy = () => {
+    if (caText === "COMING SOON") return;
+    navigator.clipboard.writeText(caText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const toggleFaq = (index) => {
-    setActiveFaq(activeFaq === index ? null : index);
-  };
-
   return (
-    <div className="min-h-screen bg-[#0A1628] text-slate-100 font-sans selection:bg-[#FFB800] selection:text-[#0A1628] overflow-x-hidden relative">
-      
-      {/* Background Water/Ripple Glow Elements */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#4DA2FF]/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
-      <div className="absolute top-1/3 right-10 w-[500px] h-[500px] bg-[#00D4C4]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 left-10 w-[450px] h-[450px] bg-[#FFB800]/5 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen bg-[#070b12] text-white font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden relative">
+      {/* Background Ambient Glows & Floating Bubbles */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse" />
+      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[150px] pointer-events-none -z-10" />
+      <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none -z-10" />
 
-      {/* --- NAVBAR --- */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrollY > 20 ? 'bg-[#0A1628]/80 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/20' : 'bg-transparent'
-      }`}>
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          
-          {/* Logo & Wordmark */}
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="relative">
-              <div className="absolute inset-0 bg-[#FFB800] rounded-full blur-sm opacity-50 group-hover:opacity-100 transition-opacity" />
-              <img 
-                src="https://i.imgur.com/ZctdcjE.jpeg" 
-                alt="Tricker Duck Logo" 
-                className="w-11 h-11 rounded-full object-cover border-2 border-[#FFB800] relative z-10 transform group-hover:scale-105 transition-transform"
-              />
-            </div>
-            <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-[#4DA2FF] to-[#00D4C4] bg-clip-text text-transparent">
-              Tricker Duck <span className="text-[#FFB800] text-sm font-bold px-2 py-0.5 rounded-full bg-[#FFB800]/10 border border-[#FFB800]/30 ml-1">$DUCK</span>
+      {/* Navigation Bar */}
+      <nav className="sticky top-0 z-50 backdrop-blur-xl bg-[#070b12]/80 border-b border-white/10 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <motion.div 
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              className="w-10 h-10 rounded-2xl overflow-hidden border-2 border-cyan-400/40 shadow-[0_0_15px_rgba(6,182,212,0.4)]"
+            >
+              <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="DUCK Logo" className="w-full h-full object-cover" />
+            </motion.div>
+            <span className="text-xl font-black tracking-wider bg-gradient-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent">
+              $DUCK
             </span>
-          </a>
-
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-            <a href="#about" className="hover:text-[#4DA2FF] transition-colors">About</a>
-            <a href="#tokenomics" className="hover:text-[#4DA2FF] transition-colors">Tokenomics</a>
-            <a href="#roadmap" className="hover:text-[#4DA2FF] transition-colors">Roadmap</a>
-            <a href="#how-to-buy" className="hover:text-[#4DA2FF] transition-colors">How to Buy</a>
-            <a href="#faq" className="hover:text-[#4DA2FF] transition-colors">FAQ</a>
           </div>
 
-          {/* Header Action Button */}
-          <div className="hidden md:flex items-center gap-4">
-            <a 
-              href="https://t.me/Duckonsui" 
-              target="_blank" 
-              rel="noreferrer"
-              className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 transition-all"
-              aria-label="Telegram"
-            >
-              <Send className="w-4 h-4" />
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+            <a href="#hero" className="hover:text-cyan-400 transition-colors">Home</a>
+            <a href="#token" className="hover:text-cyan-400 transition-colors">Tokenomics</a>
+            <a href="#game" className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 text-cyan-300">
+              <Gamepad2 className="w-4 h-4" /> Duck Run
             </a>
+            <a href="#roadmap" className="hover:text-cyan-400 transition-colors">Roadmap</a>
+            <a href="#gallery" className="hover:text-cyan-400 transition-colors">Gallery</a>
+          </div>
+
+          <div className="hidden md:flex items-center gap-4">
             <a 
               href="https://x.com/Duckonsui" 
               target="_blank" 
-              rel="noreferrer"
-              className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 transition-all"
-              aria-label="X (Twitter)"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400"
             >
               <Twitter className="w-4 h-4" />
             </a>
             <a 
-              href="#how-to-buy" 
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FFB800] to-[#FF9500] text-[#0A1628] font-bold text-sm shadow-lg shadow-[#FFB800]/20 hover:shadow-[#FFB800]/40 hover:scale-105 transition-all flex items-center gap-2"
+              href="https://t.me/Duckonsui" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400"
             >
-              <span>Buy $DUCK</span>
-              <ArrowRight className="w-4 h-4" />
+              <Send className="w-4 h-4" />
+            </a>
+            <a 
+              href="#game" 
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_25px_rgba(6,182,212,0.7)] transition-all transform hover:-translate-y-0.5 text-sm flex items-center gap-2"
+            >
+              <Play className="w-4 h-4 fill-black" /> PLAY GAME
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300"
-            aria-label="Toggle Menu"
+            className="md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-gray-300"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Menu Drawer */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 right-0 bg-[#0A1628]/95 backdrop-blur-xl border-b border-white/10 p-6 flex flex-col gap-4 shadow-2xl animate-in slide-in-from-top-5 duration-200">
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="text-lg font-medium text-slate-200 hover:text-[#4DA2FF]">About</a>
-            <a href="#tokenomics" onClick={() => setMobileMenuOpen(false)} className="text-lg font-medium text-slate-200 hover:text-[#4DA2FF]">Tokenomics</a>
-            <a href="#roadmap" onClick={() => setMobileMenuOpen(false)} className="text-lg font-medium text-slate-200 hover:text-[#4DA2FF]">Roadmap</a>
-            <a href="#how-to-buy" onClick={() => setMobileMenuOpen(false)} className="text-lg font-medium text-slate-200 hover:text-[#4DA2FF]">How to Buy</a>
-            <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="text-lg font-medium text-slate-200 hover:text-[#4DA2FF]">FAQ</a>
-            <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-              <div className="flex gap-3">
-                <a href="https://t.me/Duckonsui" target="_blank" rel="noreferrer" className="p-3 rounded-xl bg-white/5 border border-white/10 text-slate-200">
-                  <Send className="w-5 h-5" />
+        {/* Mobile Dropdown */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div 
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden border-t border-white/10 mt-4 pt-4 pb-6 flex flex-col gap-4 px-2"
+            >
+              <a href="#hero" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Home</a>
+              <a href="#token" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Tokenomics</a>
+              <a href="#game" onClick={() => setMobileMenuOpen(false)} className="text-cyan-300 hover:text-cyan-400 py-2 flex items-center gap-2">
+                <Gamepad2 className="w-4 h-4" /> Duck Run
+              </a>
+              <a href="#roadmap" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Roadmap</a>
+              <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Gallery</a>
+              <div className="flex gap-4 pt-2">
+                <a href="https://x.com/Duckonsui" target="_blank" rel="noreferrer" className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2 text-sm font-bold">
+                  <Twitter className="w-4 h-4" /> X (Twitter)
                 </a>
-                <a href="https://x.com/Duckonsui" target="_blank" rel="noreferrer" className="p-3 rounded-xl bg-white/5 border border-white/10 text-slate-200">
-                  <Twitter className="w-5 h-5" />
+                <a href="https://t.me/Duckonsui" target="_blank" rel="noreferrer" className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2 text-sm font-bold">
+                  <Send className="w-4 h-4" /> Telegram
                 </a>
               </div>
-              <a 
-                href="#how-to-buy" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#FFB800] to-[#FF9500] text-[#0A1628] font-bold text-sm shadow-lg shadow-[#FFB800]/20 flex items-center gap-2"
-              >
-                <span>Buy $DUCK</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
-      {/* --- HERO SECTION --- */}
-      <section className="relative pt-36 pb-20 md:pt-48 md:pb-32 px-6 flex flex-col items-center justify-center text-center">
-        
-        {/* Floating Mascot with Ripple Effect */}
-        <div className="relative mb-8 group">
-          <div className="absolute -inset-4 bg-gradient-to-r from-[#4DA2FF] to-[#00D4C4] rounded-full blur-xl opacity-30 group-hover:opacity-60 transition-opacity animate-pulse" />
-          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-32 h-6 bg-[#4DA2FF]/20 rounded-full blur-md animate-ping" />
-          <img 
-            src="https://i.imgur.com/ZctdcjE.jpeg" 
-            alt="Tricker Duck Mascot" 
-            className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#FFB800] shadow-2xl relative z-10 animate-[bounce_4s_ease-in-out_infinite]"
-          />
+      {/* HERO SECTION */}
+      <section id="hero" className="relative min-h-[90vh] flex items-center justify-center px-6 py-20 overflow-hidden">
+        {/* Floating background decorative bubbles */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-cyan-400/10 border border-cyan-300/20 backdrop-blur-sm"
+              style={{
+                width: `${Math.random() * 60 + 20}px`,
+                height: `${Math.random() * 60 + 20}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [-20, -120, -20],
+                x: [0, Math.random() * 40 - 20, 0],
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                duration: Math.random() * 5 + 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
         </div>
 
-        {/* Chain Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold tracking-wide text-[#00D4C4] mb-6 backdrop-blur-md shadow-inner">
-          <Sparkles className="w-3.5 h-3.5 text-[#FFB800]" />
-          <span>Built on Sui Network — Lightning Fast Speed</span>
-        </div>
-
-        {/* Headline */}
-        <h1 className="max-w-4xl text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-none mb-6">
-          The Duck That <span className="bg-gradient-to-r from-[#4DA2FF] via-[#00D4C4] to-[#FFB800] bg-clip-text text-transparent">Tricks the Market</span>
-        </h1>
-
-        {/* Subtext */}
-        <p className="max-w-xl text-lg md:text-xl text-slate-300 mb-10 font-normal">
-          Glide effortlessly across the Sui ecosystem with the slickest meme coin on water. Zero lag, pure community power, and maximum vibes.
-        </p>
-
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-16">
-          <a 
-            href="#how-to-buy" 
-            className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-[#FFB800] to-[#FF9500] text-[#0A1628] font-extrabold text-base shadow-xl shadow-[#FFB800]/30 hover:shadow-[#FFB800]/50 hover:scale-105 transition-all flex items-center justify-center gap-3 group"
+        <div className="max-w-5xl mx-auto text-center relative z-10 flex flex-col items-center">
+          {/* Sui Badge */}
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-bold tracking-wider mb-8 shadow-[0_0_20px_rgba(6,182,212,0.2)]"
           >
-            <span>Buy $DUCK Now</span>
-            <Rocket className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <a 
-            href="https://t.me/Duckonsui" 
-            target="_blank" 
-            rel="noreferrer"
-            className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-base backdrop-blur-md transition-all flex items-center justify-center gap-3"
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+            🟦 BUILT ON SUI
+          </motion.div>
+
+          {/* Floating Logo with Glow */}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="relative mb-8 group"
           >
-            <Send className="w-5 h-5 text-[#4DA2FF]" />
-            <span>Join Telegram Flock</span>
-          </a>
-        </div>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 blur-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
+            <motion.div
+              animate={{ y: [-8, 8, -8] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-36 h-36 md:w-44 md:h-44 rounded-3xl overflow-hidden border-4 border-cyan-400/50 shadow-[0_0_40px_rgba(6,182,212,0.5)] bg-slate-900"
+            >
+              <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="DUCK Hero Logo" className="w-full h-full object-cover" />
+            </motion.div>
+          </motion.div>
 
-        {/* Live Ticker / Marquee Strip */}
-        <div className="w-full max-w-4xl rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
-          <div className="flex items-center gap-3 text-sm text-slate-400">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-mono text-slate-200">CA:</span>
-            <span className="font-mono text-xs sm:text-sm text-slate-300 truncate max-w-[200px] sm:max-w-none">{contractAddress}</span>
-          </div>
-          <button 
-            onClick={copyToClipboard}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-[#00D4C4] transition-all"
+          {/* Main Titles */}
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-4"
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-            <span>{copied ? 'Copied to Clipboard!' : 'Copy Contract Address'}</span>
-          </button>
-        </div>
+            DUCK
+          </motion.h1>
 
-      </section>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-2xl md:text-3xl font-extrabold text-cyan-300 mb-6 flex items-center justify-center gap-2 flex-wrap"
+          >
+            The Duck Has Landed on SUI. 🦆💧
+          </motion.div>
 
-      {/* Water Ripple Divider */}
-      <div className="w-full overflow-hidden leading-none opacity-20 pointer-events-none">
-        <svg className="relative block w-full h-12" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path d="M0,0 C150,90 350,-40 500,60 C650,160 900,10 1200,40 L1200,120 L0,120 Z" fill="#4DA2FF"></path>
-        </svg>
-      </div>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-gray-400 text-base md:text-lg max-w-2xl mb-10 font-medium leading-relaxed"
+          >
+            A legendary duck, a chaotic community, and one mission — take DUCK to the moon.
+          </motion.p>
 
-      {/* --- ABOUT / LORE SECTION --- */}
-      <section id="about" className="py-24 px-6 relative max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-[#00D4C4] mb-3">The Legend</h2>
-          <h3 className="text-3xl md:text-5xl font-black tracking-tight mb-4">Born in Deep Waters, Built for Speed</h3>
-          <p className="text-slate-400">Tricker Duck isn't your average pond resident. While others paddle aimlessly, $DUCK navigates market currents with absolute precision on the Sui network.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          {/* Card 1 */}
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 hover:border-[#4DA2FF]/50 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-xl shadow-xl">
-            <div className="w-14 h-14 rounded-2xl bg-[#4DA2FF]/10 border border-[#4DA2FF]/30 flex items-center justify-center text-[#4DA2FF] mb-6 group-hover:scale-110 transition-transform">
-              <Users className="w-7 h-7" />
-            </div>
-            <h4 className="text-xl font-bold text-white mb-3">Community-Driven</h4>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Powered by a passionate flock of degens and builders. Every meme crafted, every wave ridden is driven by the community.
-            </p>
-          </div>
-
-          {/* Card 2 */}
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 hover:border-[#00D4C4]/50 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-xl shadow-xl">
-            <div className="w-14 h-14 rounded-2xl bg-[#00D4C4]/10 border border-[#00D4C4]/30 flex items-center justify-center text-[#00D4C4] mb-6 group-hover:scale-110 transition-transform">
-              <Zap className="w-7 h-7" />
-            </div>
-            <h4 className="text-xl font-bold text-white mb-3">Sui-Native Speed</h4>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Leveraging Sui’s parallel execution architecture. Transactions move faster than a duck diving for bread crumbs.
-            </p>
-          </div>
-
-          {/* Card 3 */}
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 hover:border-[#FFB800]/50 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-xl shadow-xl">
-            <div className="w-14 h-14 rounded-2xl bg-[#FFB800]/10 border border-[#FFB800]/30 flex items-center justify-center text-[#FFB800] mb-6 group-hover:scale-110 transition-transform">
-              <ShieldCheck className="w-7 h-7" />
-            </div>
-            <h4 className="text-xl font-bold text-white mb-3">Utility Potential</h4>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              More than just feathers and fun. $DUCK introduces unique ecosystem perks, staking rewards, and governance weight down the line.
-            </p>
-          </div>
-
-        </div>
-      </section>
-
-      {/* --- TOKENOMICS SECTION --- */}
-      <section id="tokenomics" className="py-24 px-6 relative max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-[#FFB800] mb-3">Token Distribution</h2>
-          <h3 className="text-3xl md:text-5xl font-black tracking-tight mb-4">Transparent & Fair Tokenomics</h3>
-          <p className="text-slate-400">Designed from the ground up to reward holders and sustain long-term growth.</p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          
-          {/* Key Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl">
-              <div className="text-slate-400 text-xs font-semibold uppercase mb-1">Total Supply</div>
-              <div className="text-2xl font-black text-white font-mono">1,000,000,000</div>
-              <div className="text-xs text-[#00D4C4] mt-1">$DUCK</div>
-            </div>
-            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl">
-              <div className="text-slate-400 text-xs font-semibold uppercase mb-1">Tax / Fees</div>
-              <div className="text-2xl font-black text-[#FFB800] font-mono">0% / 0%</div>
-              <div className="text-xs text-slate-400 mt-1">Zero friction trading</div>
-            </div>
-            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl">
-              <div className="text-slate-400 text-xs font-semibold uppercase mb-1">Blockchain</div>
-              <div className="text-2xl font-black text-[#4DA2FF]">Sui Network</div>
-              <div className="text-xs text-slate-400 mt-1">High throughput L1</div>
-            </div>
-            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl">
-              <div className="text-slate-400 text-xs font-semibold uppercase mb-1">Liquidity</div>
-              <div className="text-2xl font-black text-emerald-400">100% Burned</div>
-              <div className="text-xs text-slate-400 mt-1">Safu & Rug-proof</div>
-            </div>
-          </div>
-
-          {/* Allocation Breakdown Cards */}
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl flex flex-col gap-6 shadow-2xl">
-            <h4 className="text-xl font-bold text-white flex items-center gap-2">
-              <Coins className="w-5 h-5 text-[#FFB800]" />
-              <span>Supply Allocation</span>
-            </h4>
-
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-1.5 font-medium">
-                  <span className="text-slate-300">Liquidity Pool</span>
-                  <span className="text-[#4DA2FF] font-mono font-bold">80%</span>
-                </div>
-                <div className="w-full h-3 bg-white/5 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-[#4DA2FF] to-[#00D4C4] rounded-full w-[80%]" />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-sm mb-1.5 font-medium">
-                  <span className="text-slate-300">Community & Airdrops</span>
-                  <span className="text-[#FFB800] font-mono font-bold">10%</span>
-                </div>
-                <div className="w-full h-3 bg-white/5 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-[#FFB800] to-amber-500 rounded-full w-[10%]" />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-sm mb-1.5 font-medium">
-                  <span className="text-slate-300">Marketing & CEX Listings</span>
-                  <span className="text-[#00D4C4] font-mono font-bold">5%</span>
-                </div>
-                <div className="w-full h-3 bg-white/5 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-[#00D4C4] to-emerald-400 rounded-full w-[5%]" />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-sm mb-1.5 font-medium">
-                  <span className="text-slate-300">Team / Ecosystem Dev</span>
-                  <span className="text-purple-400 font-mono font-bold">5%</span>
-                </div>
-                <div className="w-full h-3 bg-white/5 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-purple-400 to-pink-500 rounded-full w-[5%]" />
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-2 text-xs text-slate-400 italic">
-              * Exact contract deployment allocations may be verified directly on Sui explorers upon launch.
-            </div>
-          </div>
-
+          {/* Action Buttons */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="flex flex-wrap items-center justify-center gap-4 w-full max-w-2xl"
+          >
+            <a 
+              href="#token"
+              className="flex-1 min-w-[160px] py-4 px-6 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 font-bold text-black shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:shadow-[0_0_35px_rgba(6,182,212,0.8)] transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide"
+            >
+              BUY $DUCK
+            </a>
+            <a 
+              href="#game"
+              className="flex-1 min-w-[160px] py-4 px-6 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 hover:border-cyan-400/50 font-bold text-white transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide backdrop-blur-md flex items-center justify-center gap-2"
+            >
+              <Gamepad2 className="w-4 h-4 text-cyan-400" /> PLAY DUCK GAME
+            </a>
+            <a 
+              href="https://t.me/Duckonsui" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex-1 min-w-[140px] py-4 px-6 rounded-2xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 font-bold text-blue-300 transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide flex items-center justify-center gap-2"
+            >
+              <Send className="w-4 h-4" /> TELEGRAM
+            </a>
+            <a 
+              href="https://x.com/Duckonsui" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex-1 min-w-[140px] py-4 px-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 font-bold text-white transition-all transform hover:-translate-y-1 text-center text-sm tracking-wide flex items-center justify-center gap-2"
+            >
+              <Twitter className="w-4 h-4" /> FOLLOW ON X
+            </a>
+          </motion.div>
         </div>
       </section>
 
-      {/* --- ROADMAP SECTION --- */}
-      <section id="roadmap" className="py-24 px-6 relative max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-[#4DA2FF] mb-3">Stepping Stones</h2>
-          <h3 className="text-3xl md:text-5xl font-black tracking-tight mb-4">The Tricker Duck Roadmap</h3>
-          <p className="text-slate-400">Follow our path across the pond as we scale up step-by-step.</p>
+      {/* WHY DUCK SECTION */}
+      <section className="py-20 px-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <motion.div 
+            whileHover={{ y: -8, transition: { duration: 0.2 } }}
+            className="p-8 rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 backdrop-blur-xl relative group overflow-hidden shadow-xl"
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-400/10 rounded-full blur-2xl group-hover:bg-yellow-400/20 transition-all" />
+            <div className="w-14 h-14 rounded-2xl bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400 mb-6 text-2xl shadow-[0_0_15px_rgba(250,204,21,0.2)]">
+              🦆
+            </div>
+            <h3 className="text-xl font-bold mb-3 tracking-wide text-white">MEME POWER</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">The internet loves ducks. Unstoppable viral energy backed by unhinged community creativity.</p>
+          </motion.div>
+
+          <motion.div 
+            whileHover={{ y: -8, transition: { duration: 0.2 } }}
+            className="p-8 rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 backdrop-blur-xl relative group overflow-hidden shadow-xl"
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-400/10 rounded-full blur-2xl group-hover:bg-cyan-400/20 transition-all" />
+            <div className="w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 mb-6 text-2xl shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+              💧
+            </div>
+            <h3 className="text-xl font-bold mb-3 tracking-wide text-white">SUI POWERED</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">Built for the SUI ecosystem with lightning-fast speeds and ultra-low transaction costs.</p>
+          </motion.div>
+
+          <motion.div 
+            whileHover={{ y: -8, transition: { duration: 0.2 } }}
+            className="p-8 rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 backdrop-blur-xl relative group overflow-hidden shadow-xl"
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all" />
+            <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-6 text-2xl shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+              🔥
+            </div>
+            <h3 className="text-xl font-bold mb-3 tracking-wide text-white">COMMUNITY POWER</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">Driven by the Duck Army. Decentralized, passionate, and ready to conquer the crypto space.</p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* TOKEN SECTION */}
+      <section id="token" className="py-20 px-6 max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-5xl font-black mb-3 tracking-tight">$DUCK TOKEN</h2>
+          <p className="text-gray-400 text-sm md:text-base">Transparent tokenomics designed for maximum community upside.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
+            <span className="text-gray-400 text-sm font-medium">Token Name</span>
+            <span className="font-bold text-white text-lg">$DUCK</span>
+          </div>
+          <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
+            <span className="text-gray-400 text-sm font-medium">Blockchain</span>
+            <span className="font-bold text-cyan-400 text-lg flex items-center gap-1.5">🟦 SUI</span>
+          </div>
+          <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
+            <span className="text-gray-400 text-sm font-medium">Community</span>
+            <span className="font-bold text-yellow-300 text-lg">Duck Army 🦆</span>
+          </div>
+          <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
+            <span className="text-gray-400 text-sm font-medium">Launch Type</span>
+            <span className="font-bold text-white text-lg">Fair & Community Driven</span>
+          </div>
+        </div>
+
+        {/* Contract Address Box */}
+        <div className="p-8 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-blue-600/10 to-purple-600/10 border border-cyan-500/30 backdrop-blur-xl text-center shadow-2xl">
+          <h3 className="text-xs font-bold text-cyan-400 tracking-widest uppercase mb-3">Contract Address</h3>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 bg-black/40 p-4 rounded-2xl border border-white/10 max-w-2xl mx-auto">
+            <span className="font-mono text-lg md:text-xl font-bold tracking-wider text-white">
+              {caText}
+            </span>
+            {caText !== "COMING SOON" && (
+              <button 
+                onClick={handleCopy}
+                className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(6,182,212,0.4)]"
+              >
+                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                {copied ? "COPIED!" : "COPY CA"}
+              </button>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* DUCK GAME SECTION */}
+      <section id="game" className="py-20 px-4 max-w-5xl mx-auto">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-bold mb-3">
+            <Gamepad2 className="w-3.5 h-3.5" /> ARCADE MINI-GAME
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-2">DUCK RUN 🦆</h2>
+          <p className="text-gray-400 text-sm">Jump obstacles, collect SUI crystals, and achieve legendary high scores!</p>
+        </div>
+
+        <DuckGameContainer />
+      </section>
+
+      {/* ROADMAP SECTION */}
+      <section id="roadmap" className="py-20 px-6 max-w-5xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-black mb-3 tracking-tight">ROADMAP</h2>
+          <p className="text-gray-400 text-sm md:text-base">The strategic flight path of the DUCK revolution.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
           {/* Phase 1 */}
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 hover:border-[#4DA2FF]/40 backdrop-blur-xl relative group flex flex-col justify-between">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="p-8 rounded-3xl bg-white/[0.03] border border-cyan-500/30 backdrop-blur-xl relative flex flex-col justify-between shadow-xl overflow-hidden group"
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-bl-full pointer-events-none" />
             <div>
-              <div className="inline-block px-3 py-1 rounded-lg bg-[#4DA2FF]/10 border border-[#4DA2FF]/30 text-[#4DA2FF] font-mono text-xs font-bold mb-4">
-                Phase 01
+              <div className="inline-block px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold mb-4 border border-cyan-500/20">
+                PHASE 01
               </div>
-              <h4 className="text-xl font-bold text-white mb-3">Hatching & Launch</h4>
-              <ul className="space-y-2 text-sm text-slate-400">
-                <li className="flex items-center gap-2">✓ Smart Contract Deployment</li>
-                <li className="flex items-center gap-2">✓ Website & Branding Live</li>
-                <li className="flex items-center gap-2">✓ Initial DEX Liquidity Setup</li>
+              <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                THE DUCK ARRIVES 🥚
+              </h3>
+              <ul className="space-y-3 text-gray-300 text-sm">
+                <li className="flex items-center gap-2">✓ Duck launches on SUI</li>
+                <li className="flex items-center gap-2">✓ Website goes live</li>
+                <li className="flex items-center gap-2">✓ Community begins</li>
+                <li className="flex items-center gap-2">✓ Duck Army forms</li>
               </ul>
             </div>
-            <div className="mt-8 pt-4 border-t border-white/5 text-xs text-[#00D4C4] font-semibold flex items-center gap-1">
-              <span>Status: Completed</span>
+            <div className="mt-8 pt-4 border-t border-white/10 text-xs font-semibold text-cyan-400 uppercase tracking-wider">
+              Status: COMPLETED
             </div>
-          </div>
+          </motion.div>
 
           {/* Phase 2 */}
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 hover:border-[#00D4C4]/40 backdrop-blur-xl relative group flex flex-col justify-between">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="p-8 rounded-3xl bg-gradient-to-b from-cyan-500/10 to-white/[0.03] border border-cyan-400/50 backdrop-blur-xl relative flex flex-col justify-between shadow-[0_0_30px_rgba(6,182,212,0.15)] overflow-hidden group"
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-400/20 rounded-bl-full pointer-events-none" />
             <div>
-              <div className="inline-block px-3 py-1 rounded-lg bg-[#00D4C4]/10 border border-[#00D4C4]/30 text-[#00D4C4] font-mono text-xs font-bold mb-4">
-                Phase 02
+              <div className="inline-block px-3 py-1 rounded-full bg-cyan-400/20 text-cyan-300 text-xs font-bold mb-4 border border-cyan-400/30">
+                PHASE 02
               </div>
-              <h4 className="text-xl font-bold text-white mb-3">Community Growth</h4>
-              <ul className="space-y-2 text-sm text-slate-400">
-                <li className="flex items-center gap-2">• Telegram & X Raids</li>
-                <li className="flex items-center gap-2">• Meme Contests & Rewards</li>
-                <li className="flex items-center gap-2">• First 1,000 Holders Goal</li>
+              <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-white">
+                DUCK TAKEOVER 🦆
+              </h3>
+              <ul className="space-y-3 text-gray-200 text-sm">
+                <li className="flex items-center gap-2">⚡ Community expansion</li>
+                <li className="flex items-center gap-2">⚡ Viral marketing campaigns</li>
+                <li className="flex items-center gap-2">⚡ Duck Game launch</li>
+                <li className="flex items-center gap-2">⚡ Memes everywhere</li>
               </ul>
             </div>
-            <div className="mt-8 pt-4 border-t border-white/5 text-xs text-[#FFB800] font-semibold flex items-center gap-1">
-              <span>Status: In Progress</span>
+            <div className="mt-8 pt-4 border-t border-white/10 text-xs font-semibold text-cyan-300 uppercase tracking-wider animate-pulse">
+              Status: ACTIVE NOW
             </div>
-          </div>
+          </motion.div>
 
           {/* Phase 3 */}
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 hover:border-[#FFB800]/40 backdrop-blur-xl relative group flex flex-col justify-between">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl relative flex flex-col justify-between shadow-xl overflow-hidden group"
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-bl-full pointer-events-none" />
             <div>
-              <div className="inline-block px-3 py-1 rounded-lg bg-[#FFB800]/10 border border-[#FFB800]/30 text-[#FFB800] font-mono text-xs font-bold mb-4">
-                Phase 03
+              <div className="inline-block px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold mb-4 border border-blue-500/20">
+                PHASE 03
               </div>
-              <h4 className="text-xl font-bold text-white mb-3">CEX Listings & Collabs</h4>
-              <ul className="space-y-2 text-sm text-slate-400">
-                <li className="flex items-center gap-2">○ CoinGecko & CoinMarketCap</li>
-                <li className="flex items-center gap-2">○ Mid-tier CEX Applications</li>
-                <li className="flex items-center gap-2">○ Ecosystem Partnerships</li>
+              <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                DUCK TO THE MOON 🚀
+              </h3>
+              <ul className="space-y-3 text-gray-300 text-sm">
+                <li className="flex items-center gap-2">• Major community milestones</li>
+                <li className="flex items-center gap-2">• Strategic partnerships</li>
+                <li className="flex items-center gap-2">• Expanded ecosystem games</li>
+                <li className="flex items-center gap-2">• Global dominance</li>
               </ul>
             </div>
-            <div className="mt-8 pt-4 border-t border-white/5 text-xs text-slate-500 font-semibold flex items-center gap-1">
-              <span>Status: Upcoming</span>
+            <div className="mt-8 pt-4 border-t border-white/10 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              Status: UPCOMING
             </div>
-          </div>
-
-          {/* Phase 4 */}
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 hover:border-purple-400/40 backdrop-blur-xl relative group flex flex-col justify-between">
-            <div>
-              <div className="inline-block px-3 py-1 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-xs font-bold mb-4">
-                Phase 04
-              </div>
-              <h4 className="text-xl font-bold text-white mb-3">Ecosystem Expansion</h4>
-              <ul className="space-y-2 text-sm text-slate-400">
-                <li className="flex items-center gap-2">○ Staking & Utility DApp</li>
-                <li className="flex items-center gap-2">○ Tier-1 CEX Listings</li>
-                <li className="flex items-center gap-2">○ Global Domination</li>
-              </ul>
-            </div>
-            <div className="mt-8 pt-4 border-t border-white/5 text-xs text-slate-500 font-semibold flex items-center gap-1">
-              <span>Status: Future Vision</span>
-            </div>
-          </div>
-
+          </motion.div>
         </div>
       </section>
 
-      {/* --- HOW TO BUY SECTION --- */}
-      <section id="how-to-buy" className="py-24 px-6 relative max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-[#00D4C4] mb-3">Easy Guide</h2>
-          <h3 className="text-3xl md:text-5xl font-black tracking-tight mb-4">How to Buy $DUCK</h3>
-          <p className="text-slate-400">Get your flippers ready in 4 simple steps.</p>
+      {/* DUCK GALLERY SECTION */}
+      <section id="gallery" className="py-20 px-6 max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-black mb-3 tracking-tight">DUCK GALLERY</h2>
+          <p className="text-gray-400 text-sm md:text-base">The official visual identity and legendary artwork of the Duck Army.</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl relative">
-            <div className="text-4xl font-black text-white/10 font-mono mb-4">01</div>
-            <h4 className="text-lg font-bold text-white mb-2">Get a Sui Wallet</h4>
-            <p className="text-slate-400 text-sm">Download a trusted Sui-compatible wallet like Sui Wallet, Ethos, or Martian from your browser store.</p>
-          </div>
-
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl relative">
-            <div className="text-4xl font-black text-white/10 font-mono mb-4">02</div>
-            <h4 className="text-lg font-bold text-white mb-2">Fund with SUI</h4>
-            <p className="text-slate-400 text-sm">Purchase SUI from any major exchange and transfer it directly to your web3 wallet address.</p>
-          </div>
-
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl relative">
-            <div className="text-4xl font-black text-white/10 font-mono mb-4">03</div>
-            <h4 className="text-lg font-bold text-white mb-2">Head to a DEX</h4>
-            <p className="text-slate-400 text-sm">Connect your wallet to a Sui decentralized exchange (like Cetus or Turbos) to swap tokens.</p>
-          </div>
-
-          <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl relative">
-            <div className="text-4xl font-black text-white/10 font-mono mb-4">04</div>
-            <h4 className="text-lg font-bold text-white mb-2">Swap & Hold $DUCK</h4>
-            <p className="text-slate-400 text-sm">Paste the official $DUCK contract address, swap your SUI, and join the exclusive holder flock!</p>
-          </div>
-
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            { title: "Duck Army", subtitle: "United We Quack", badge: "Army" },
+            { title: "Duck Mode", subtitle: "Full Send Activated", badge: "Classic" },
+            { title: "SUI Duck", subtitle: "Native Ecosystem King", badge: "SUI" },
+            { title: "Moon Duck", subtitle: "Trajectory Confirmed", badge: "Space" },
+            { title: "Legendary Duck", subtitle: "One of a Kind", badge: "Rare" },
+            { title: "Cyber Duck", subtitle: "Web3 Future State", badge: "Cyber" }
+          ].map((item, idx) => (
+            <motion.div
+              key={idx}
+              whileHover={{ y: -8, scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+              className="p-4 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl group relative overflow-hidden shadow-xl"
+            >
+              <div className="relative h-64 rounded-2xl overflow-hidden mb-4 border border-white/10 bg-slate-900">
+                <img 
+                  src="https://i.imgur.com/ZctdcjE.jpeg" 
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-cyan-300">
+                  {item.badge}
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+              </div>
+              <div className="px-2 pb-2">
+                <h3 className="text-lg font-bold text-white mb-1">{item.title}</h3>
+                <p className="text-xs text-gray-400 font-medium">{item.subtitle}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* --- COMMUNITY / SOCIAL SECTION --- */}
-      <section className="py-24 px-6 relative max-w-5xl mx-auto">
-        <div className="p-10 md:p-16 rounded-3xl bg-gradient-to-br from-[#4DA2FF]/20 via-[#0A1628] to-[#00D4C4]/20 border border-white/10 backdrop-blur-2xl text-center relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#FFB800]/10 rounded-full blur-3xl pointer-events-none" />
+      {/* COMMUNITY SECTION */}
+      <section className="py-20 px-6 max-w-5xl mx-auto">
+        <div className="p-10 md:p-16 rounded-3xl bg-gradient-to-br from-cyan-500/20 via-blue-600/10 to-purple-600/20 border border-cyan-500/30 backdrop-blur-2xl text-center relative overflow-hidden shadow-2xl">
+          <div className="absolute -top-24 -right-24 w-72 h-72 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none" />
           
-          <h3 className="text-3xl md:text-4xl font-black text-white mb-4">Join the Flock</h3>
-          <p className="text-slate-300 max-w-xl mx-auto mb-8 text-base">
-            Don't swim alone. Connect with thousands of other holders on our official social channels for updates, memes, and community alpha.
+          <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">JOIN THE DUCK ARMY 🦆</h2>
+          <p className="text-gray-300 text-base md:text-lg max-w-xl mx-auto mb-8 font-medium">
+            The Duck is already swimming. Are you joining?
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a 
               href="https://x.com/Duckonsui" 
               target="_blank" 
-              rel="noreferrer"
-              className="px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm transition-all flex items-center gap-3 backdrop-blur-md"
+              rel="noopener noreferrer"
+              className="px-8 py-4 rounded-2xl bg-white text-black font-extrabold hover:bg-cyan-100 transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center gap-2.5 text-sm"
             >
-              <Twitter className="w-5 h-5 text-[#4DA2FF]" />
-              <span>Follow X (Twitter)</span>
-              <ExternalLink className="w-4 h-4 opacity-60" />
+              <Twitter className="w-4 h-4 fill-black" /> FOLLOW ON X
             </a>
             <a 
               href="https://t.me/Duckonsui" 
               target="_blank" 
-              rel="noreferrer"
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#4DA2FF] to-[#00D4C4] text-[#0A1628] font-extrabold text-sm shadow-lg shadow-[#4DA2FF]/30 hover:scale-105 transition-all flex items-center gap-3"
+              rel="noopener noreferrer"
+              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-extrabold shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:shadow-[0_0_35px_rgba(6,182,212,0.7)] transition-all transform hover:-translate-y-1 flex items-center gap-2.5 text-sm"
             >
-              <Send className="w-5 h-5" />
-              <span>Join Telegram Group</span>
-              <ExternalLink className="w-4 h-4 opacity-60" />
+              <Send className="w-4 h-4 fill-black" /> JOIN TELEGRAM
             </a>
           </div>
         </div>
       </section>
 
-      {/* --- FAQ SECTION --- */}
-      <section id="faq" className="py-24 px-6 relative max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-[#FFB800] mb-3">Got Questions?</h2>
-          <h3 className="text-3xl md:text-5xl font-black tracking-tight mb-4">Frequently Asked Questions</h3>
-          <p className="text-slate-400">Everything you need to know about Tricker Duck ($DUCK).</p>
+      {/* FINAL CTA SECTION */}
+      <section className="py-20 px-6 max-w-5xl mx-auto text-center relative">
+        <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+          <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="Watermark" className="w-[500px] h-[500px] object-contain rounded-full" />
         </div>
 
-        <div className="space-y-4">
-          {[
-            {
-              q: "What is Tricker Duck ($DUCK)?",
-              a: "Tricker Duck is a community-driven meme coin built on the high-speed Sui blockchain, combining playful branding with elite web3 engagement."
-            },
-            {
-              q: "Why choose the Sui blockchain?",
-              a: "Sui offers instant finality, extremely low transaction fees, and high throughput, making meme trading seamless and lightning fast."
-            },
-            {
-              q: "Are there any trading taxes?",
-              a: "No! $DUCK features a 0% buy and 0% sell tax policy, ensuring maximum liquidity and smooth trading conditions for all participants."
-            },
-            {
-              q: "How can I get involved in the community?",
-              a: "You can join our active Telegram group and follow our X account. We regularly host community events, raids, and meme competitions."
-            },
-            {
-              q: "Where can I find the official Contract Address?",
-              a: "The official contract address is displayed securely at the top banner and tokenomics section of this website. Always verify through official channels to avoid scams."
-            }
-          ].map((item, idx) => (
-            <div 
-              key={idx}
-              className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden backdrop-blur-xl transition-all"
-            >
-              <button 
-                onClick={() => toggleFaq(idx)}
-                className="w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-lg text-slate-200 hover:text-white"
-              >
-                <span>{item.q}</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180 text-[#FFB800]' : ''}`} />
-              </button>
-              {activeFaq === idx && (
-                <div className="px-6 pb-6 text-slate-400 text-sm leading-relaxed border-t border-white/5 pt-4">
-                  {item.a}
-                </div>
-              )}
-            </div>
-          ))}
+        <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-4 relative z-10">
+          DUCK IS COMING. 🦆
+        </h2>
+        <p className="text-cyan-300 font-bold tracking-widest text-sm uppercase mb-8 relative z-10">
+          SUI × DUCK × COMMUNITY
+        </p>
+
+        <div className="flex flex-wrap items-center justify-center gap-4 relative z-10">
+          <a 
+            href="#token"
+            className="px-8 py-4 rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-black font-extrabold transition-all transform hover:-translate-y-1 shadow-[0_0_25px_rgba(6,182,212,0.5)] text-sm"
+          >
+            BUY $DUCK
+          </a>
+          <a 
+            href="#game"
+            className="px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 hover:border-cyan-400 font-extrabold text-white transition-all transform hover:-translate-y-1 backdrop-blur-md flex items-center gap-2 text-sm"
+          >
+            <Gamepad2 className="w-4 h-4 text-cyan-400" /> PLAY DUCK RUN
+          </a>
         </div>
       </section>
 
-      {/* --- FOOTER --- */}
-      <footer className="border-t border-white/10 bg-[#070e19] py-16 px-6 relative">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-          
-          <div className="flex flex-col items-center md:items-start gap-3">
-            <div className="flex items-center gap-3">
-              <img 
-                src="https://i.imgur.com/ZctdcjE.jpeg" 
-                alt="Tricker Duck Logo" 
-                className="w-8 h-8 rounded-full object-cover border border-[#FFB800]"
-              />
-              <span className="font-extrabold text-lg text-white">Tricker Duck <span className="text-[#FFB800]">$DUCK</span></span>
+      {/* FOOTER */}
+      <footer className="border-t border-white/10 bg-[#05080e] py-12 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl overflow-hidden border border-cyan-400/40">
+              <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="DUCK Logo" className="w-full h-full object-cover" />
             </div>
-            <p className="text-xs text-slate-500 max-w-sm">
-              The premier water-loving meme coin of the Sui ecosystem. Fast, fun, and unstoppable.
-            </p>
+            <div>
+              <span className="font-black text-lg tracking-wider text-white">DUCK</span>
+              <p className="text-xs text-gray-400">The legendary Duck on SUI. 🦆💧</p>
+            </div>
           </div>
 
           <div className="flex items-center gap-4">
             <a 
               href="https://x.com/Duckonsui" 
               target="_blank" 
-              rel="noreferrer"
-              className="p-3 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 transition-all"
-              aria-label="X (Twitter)"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400 text-xs font-bold flex items-center gap-2"
             >
-              <Twitter className="w-5 h-5" />
+              <Twitter className="w-4 h-4" /> X (Twitter)
             </a>
             <a 
               href="https://t.me/Duckonsui" 
               target="_blank" 
-              rel="noreferrer"
-              className="p-3 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 transition-all"
-              aria-label="Telegram"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400 text-xs font-bold flex items-center gap-2"
             >
-              <Send className="w-5 h-5" />
+              <Send className="w-4 h-4" /> Telegram
             </a>
           </div>
-
         </div>
-
-        <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} Tricker Duck ($DUCK). All rights reserved.</p>
-          <p className="max-w-xl text-center md:text-right">
-            Disclaimer: $DUCK is a meme coin with no intrinsic value or expectation of financial return. Cryptocurrencies are volatile; do your own research before trading.
-          </p>
+        <div className="max-w-7xl mx-auto mt-8 pt-6 border-t border-white/5 text-center text-xs text-gray-500">
+          © 2026 DUCK ON SUI. All rights reserved. Meme coin for entertainment purposes only.
         </div>
       </footer>
-
     </div>
   );
 }
+
+// ---------------------------------------------------------
+// DUCK RUN GAME COMPONENT (Fully Playable HTML5 Canvas Arcade)
+// ---------------------------------------------------------
+function DuckGameContainer() {
+  const canvasRef = useRef(null);
+  const [gameState, setGameState] = useState("START"); // START, PLAYING, PAUSED, GAMEOVER
+  const [score, setScore] = useState(0);
+  const [coins, setCoins] = useState(0);
+  const [distance, setDistance] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+
+  // Game references for loop state management without re-triggering renders
+  const stateRef = useRef({
+    score: 0,
+    coins: 0,
+    distance: 0,
+    speed: 6,
+    duck: { x: 60, y: 0, vy: 0, width: 45, height: 40, isJumping: false },
+    obstacles: [],
+    collectibles: [],
+    particles: [],
+    clouds: [],
+    frame: 0
+  });
+
+  // Initialize clouds & background elements
+  useEffect(() => {
+    const s = stateRef.current;
+    s.clouds = [
+      { x: 100, y: 50, speed: 0.5, size: 60 },
+      { x: 350, y: 80, speed: 0.3, size: 80 },
+      { x: 600, y: 40, speed: 0.6, size: 50 }
+    ];
+  }, []);
+
+  const startGame = () => {
+    const s = stateRef.current;
+    s.score = 0;
+    s.coins = 0;
+    s.distance = 0;
+    s.speed = 6;
+    s.duck = { x: 60, y: 220, vy: 0, width: 45, height: 40, isJumping: false };
+    s.obstacles = [];
+    s.collectibles = [];
+    s.particles = [];
+    s.frame = 0;
+
+    setScore(0);
+    setCoins(0);
+    setDistance(0);
+    setGameState("PLAYING");
+  };
+
+  const togglePause = () => {
+    if (gameState === "PLAYING") setGameState("PAUSED");
+    else if (gameState === "PAUSED") setGameState("PLAYING");
+  };
+
+  const jump = () => {
+    const s = stateRef.current;
+    if (gameState !== "PLAYING") return;
+    if (!s.duck.isJumping) {
+      s.duck.vy = -12.5;
+      s.duck.isJumping = true;
+      // Add jump particles
+      for (let i = 0; i < 5; i++) {
+        s.particles.push({
+          x: s.duck.x + 20,
+          y: s.duck.y + 40,
+          vx: (Math.random() - 0.5) * 4,
+          vy: Math.random() * 2 + 1,
+          size: Math.random() * 4 + 2,
+          color: "#38bdf8",
+          alpha: 1
+        });
+      }
+    }
+  };
+
+  // Keyboard controls listener
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === "Space" || e.code === "ArrowUp") {
+        e.preventDefault();
+        if (gameState === "PLAYING") jump();
+        else if (gameState === "START" || gameState === "GAMEOVER") startGame();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [gameState]);
+
+  // Main Game Loop Effect
+  useEffect(() => {
+    if (gameState !== "PLAYING") return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let animationFrameId;
+
+    const groundY = 260;
+
+    const updateGame = () => {
+      const s = stateRef.current;
+      s.frame++;
+
+      // Increase speed gradually
+      s.speed = 6 + Math.floor(s.distance / 300) * 0.5;
+
+      // Duck Physics
+      s.duck.vy += 0.6; // Gravity
+      s.duck.y += s.duck.vy;
+
+      if (s.duck.y > groundY - s.duck.height) {
+        s.duck.y = groundY - s.duck.height;
+        s.duck.vy = 0;
