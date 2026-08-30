@@ -7,6 +7,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Ensures the game canvas renders crisp and large on both mobile and PC */
+        #game-container {
+            width: 100%;
+            max-width: 1100px;
+            aspect-ratio: 16 / 9;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px) {
+            #game-container {
+                aspect-ratio: 16 / 10;
+            }
+        }
+    </style>
 </head>
 <body class="min-h-screen bg-[#070b12] text-white font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden relative">
     
@@ -167,7 +181,7 @@
         </div>
     </section>
 
-    <section id="game" class="py-16 sm:py-20 px-2 sm:px-4 max-w-6xl mx-auto">
+    <section id="game" class="py-16 sm:py-20 px-2 sm:px-6 w-full">
         <div class="text-center mb-8 px-4">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-bold mb-3">
                 <i data-lucide="gamepad-2" class="w-3.5 h-3.5"></i> ARCADE MINI-GAME
@@ -176,53 +190,53 @@
             <p class="text-gray-400 text-sm">Jump obstacles, collect SUI crystals, and achieve legendary high scores!</p>
         </div>
 
-        <div class="w-full max-w-5xl mx-auto rounded-3xl bg-slate-900/90 border border-cyan-500/30 backdrop-blur-2xl overflow-hidden shadow-[0_0_60px_rgba(6,182,212,0.2)] relative">
-            <div class="flex items-center justify-between px-4 sm:px-6 py-3.5 bg-black/60 border-b border-white/10 text-xs sm:text-sm font-bold">
-                <div class="flex items-center gap-1.5 text-cyan-400">
-                    <i data-lucide="gamepad-2" class="w-4 h-4"></i> <span class="hidden xs:inline">🦆</span> DUCK RUN
+        <div class="w-full max-w-[1150px] mx-auto rounded-3xl bg-slate-900/90 border border-cyan-500/30 backdrop-blur-2xl overflow-hidden shadow-[0_0_80px_rgba(6,182,212,0.25)] relative">
+            <div class="flex items-center justify-between px-4 sm:px-8 py-4 bg-black/70 border-b border-white/10 text-xs sm:text-base font-bold">
+                <div class="flex items-center gap-2 text-cyan-400">
+                    <i data-lucide="gamepad-2" class="w-5 h-5"></i> 🦆 DUCK RUN
                 </div>
-                <div class="flex items-center gap-3 sm:gap-6">
+                <div class="flex items-center gap-4 sm:gap-8">
                     <div>SCORE: <span id="hud-score" class="text-white font-black">0</span></div>
                     <div class="hidden xs:block">COINS: <span id="hud-coins" class="text-yellow-400 font-black">0</span></div>
                     <div>DIST: <span id="hud-dist" class="text-cyan-300 font-black">0m</span></div>
                 </div>
             </div>
 
-            <div id="game-container" class="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-[#0b1329] flex items-center justify-center overflow-hidden touch-none select-none">
-                <canvas id="duckCanvas" width="1050" height="450" class="w-full h-full object-cover"></canvas>
+            <div id="game-container" class="relative w-full bg-[#0b1329] flex items-center justify-center overflow-hidden touch-none select-none">
+                <canvas id="duckCanvas" width="1200" height="520" class="w-full h-full object-fill"></canvas>
 
                 <div id="start-overlay" class="absolute inset-0 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center z-20">
-                    <div class="w-20 h-20 rounded-3xl overflow-hidden border-2 border-cyan-400/50 shadow-[0_0_20px_rgba(6,182,212,0.5)] mb-4">
+                    <div class="w-24 h-24 rounded-3xl overflow-hidden border-2 border-cyan-400/50 shadow-[0_0_25px_rgba(6,182,212,0.6)] mb-4">
                         <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="Logo" class="w-full h-full object-cover">
                     </div>
-                    <h3 class="text-2xl sm:text-4xl font-black mb-2 tracking-tight">READY TO RUN? 🦆</h3>
-                    <p class="text-gray-400 text-xs sm:text-sm max-w-md mb-6 px-4">Jump over obstacles, collect SUI crystals, and survive the ultimate SUI run!</p>
-                    <button id="start-btn" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 font-extrabold text-black shadow-[0_0_25px_rgba(6,182,212,0.6)] hover:shadow-[0_0_35px_rgba(6,182,212,0.9)] transition-all transform hover:-translate-y-1 text-sm flex items-center gap-2 cursor-pointer">
-                        <i data-lucide="play" class="w-4 h-4 fill-black"></i> START GAME
+                    <h3 class="text-3xl sm:text-5xl font-black mb-3 tracking-tight">READY TO RUN? 🦆</h3>
+                    <p class="text-gray-300 text-sm sm:text-base max-w-lg mb-8 px-4">Jump over obstacles, collect SUI crystals, and survive the ultimate SUI run on any device!</p>
+                    <button id="start-btn" class="px-10 py-4.5 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 font-extrabold text-black shadow-[0_0_30px_rgba(6,182,212,0.7)] hover:shadow-[0_0_40px_rgba(6,182,212,0.95)] transition-all transform hover:-translate-y-1 text-base flex items-center gap-2.5 cursor-pointer">
+                        <i data-lucide="play" class="w-5 h-5 fill-black"></i> START GAME
                     </button>
                 </div>
 
                 <div id="gameover-overlay" class="absolute inset-0 bg-black/90 backdrop-blur-md hidden flex-col items-center justify-center p-6 text-center z-20">
-                    <h3 class="text-3xl sm:text-4xl font-black text-red-400 mb-2">GAME OVER 🦆💀</h3>
-                    <div class="flex gap-6 my-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+                    <h3 class="text-3xl sm:text-5xl font-black text-red-400 mb-3">GAME OVER 🦆💀</h3>
+                    <div class="flex gap-8 my-5 bg-white/5 p-5 rounded-2xl border border-white/10">
                         <div>
-                            <p class="text-xs text-gray-400">Your Score</p>
-                            <p id="final-score" class="text-xl font-bold text-white">0</p>
+                            <p class="text-xs sm:text-sm text-gray-400">Your Score</p>
+                            <p id="final-score" class="text-2xl font-bold text-white">0</p>
                         </div>
-                        <div class="border-l border-white/10 pl-6">
-                            <p class="text-xs text-gray-400">Best Score</p>
-                            <p id="best-score" class="text-xl font-bold text-cyan-400">0</p>
+                        <div class="border-l border-white/10 pl-8">
+                            <p class="text-xs sm:text-sm text-gray-400">Best Score</p>
+                            <p id="best-score" class="text-2xl font-bold text-cyan-400">0</p>
                         </div>
                     </div>
-                    <button id="restart-btn" class="px-6 py-3.5 rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-black font-extrabold text-sm shadow-[0_0_20px_rgba(6,182,212,0.5)] transition-all transform hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer">
-                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i> PLAY AGAIN
+                    <button id="restart-btn" class="px-8 py-4 rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-black font-extrabold text-base shadow-[0_0_25px_rgba(6,182,212,0.6)] transition-all transform hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer">
+                        <i data-lucide="rotate-ccw" class="w-5 h-5"></i> PLAY AGAIN
                     </button>
                 </div>
             </div>
 
-            <div class="p-4 bg-black/70 border-t border-white/10 flex items-center justify-between">
-                <div class="text-xs text-gray-400 hidden sm:block">Controls: <span class="text-cyan-400 font-bold">Space / Up Arrow</span> or tap button</div>
-                <button id="jump-btn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 active:scale-95 transition-transform font-black text-black text-lg tracking-wide shadow-[0_0_25px_rgba(6,182,212,0.5)] flex items-center justify-center gap-2 cursor-pointer select-none">
+            <div class="p-4 sm:p-5 bg-black/80 border-t border-white/10 flex items-center justify-between">
+                <div class="text-xs sm:text-sm text-gray-400 hidden sm:block">Controls: <span class="text-cyan-400 font-bold">Space / Up Arrow</span> or tap button</div>
+                <button id="jump-btn" class="w-full py-4.5 sm:py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 active:scale-95 transition-transform font-black text-black text-lg tracking-wider shadow-[0_0_30px_rgba(6,182,212,0.6)] flex items-center justify-center gap-2 cursor-pointer select-none">
                     <i data-lucide="arrow-up" class="w-6 h-6 stroke-[3]"></i> TAP TO JUMP 🚀
                 </button>
             </div>
@@ -338,32 +352,32 @@
             });
         });
 
-        // HTML5 Canvas Arcade Game: DUCK RUN (Larger Scale & Touch Friendly)
+        // HTML5 Canvas Arcade Game: DUCK RUN (Larger Resolution & Scaled for Mobile/PC)
         const canvas = document.getElementById('duckCanvas');
         const ctx = canvas.getContext('2d');
         
         let gameState = 'START'; // START, PLAYING, GAMEOVER
         let score = 0, coins = 0, distance = 0, highScore = 0;
-        let speed = 7, frame = 0;
+        let speed = 8, frame = 0;
         
-        let duck = { x: 80, y: 350, vy: 0, width: 55, height: 50, isJumping: false };
+        let duck = { x: 100, y: 400, vy: 0, width: 64, height: 58, isJumping: false };
         let obstacles = [];
         let collectibles = [];
         let clouds = [
-            { x: 150, y: 80, speed: 0.5, size: 80 },
-            { x: 500, y: 120, speed: 0.3, size: 100 },
-            { x: 850, y: 70, speed: 0.6, size: 70 }
+            { x: 200, y: 90, speed: 0.6, size: 90 },
+            { x: 650, y: 140, speed: 0.35, size: 120 },
+            { x: 1050, y: 80, speed: 0.7, size: 85 }
         ];
         let particles = [];
-        const groundY = 380;
+        const groundY = 430;
 
         function startGame() {
             score = 0;
             coins = 0;
             distance = 0;
-            speed = 7;
+            speed = 8;
             frame = 0;
-            duck = { x: 80, y: 350, vy: 0, width: 55, height: 50, isJumping: false };
+            duck = { x: 100, y: 400, vy: 0, width: 64, height: 58, isJumping: false };
             obstacles = [];
             collectibles = [];
             particles = [];
@@ -377,13 +391,13 @@
             if (e) e.preventDefault();
             if (gameState !== 'PLAYING') return;
             if (!duck.isJumping) {
-                duck.vy = -14.5;
+                duck.vy = -15.5;
                 duck.isJumping = true;
-                for (let i = 0; i < 6; i++) {
+                for (let i = 0; i < 8; i++) {
                     particles.push({
-                        x: duck.x + 25, y: duck.y + 50,
-                        vx: (Math.random() - 0.5) * 5, vy: Math.random() * 2 + 1,
-                        size: Math.random() * 5 + 2, color: '#38bdf8', alpha: 1
+                        x: duck.x + 30, y: duck.y + 55,
+                        vx: (Math.random() - 0.5) * 6, vy: Math.random() * 2.5 + 1,
+                        size: Math.random() * 6 + 2, color: '#38bdf8', alpha: 1
                     });
                 }
             }
@@ -396,7 +410,6 @@
         jumpBtn.addEventListener('click', jump);
         jumpBtn.addEventListener('touchstart', jump, { passive: false });
 
-        // Canvas touch support to jump directly by tapping the game screen
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameState === 'PLAYING') {
@@ -417,10 +430,10 @@
         function gameLoop() {
             if (gameState === 'PLAYING') {
                 frame++;
-                speed = 7 + Math.floor(distance / 350) * 0.5;
+                speed = 8 + Math.floor(distance / 400) * 0.5;
 
                 // Physics
-                duck.vy += 0.65;
+                duck.vy += 0.7;
                 duck.y += duck.vy;
                 if (duck.y > groundY - duck.height) {
                     duck.y = groundY - duck.height;
@@ -435,17 +448,17 @@
                 document.getElementById('hud-dist').innerText = distance + 'm';
 
                 // Spawn obstacles
-                if (frame % Math.max(70 - Math.floor(speed * 2), 35) === 0) {
+                if (frame % Math.max(65 - Math.floor(speed * 1.8), 32) === 0) {
                     const types = ['rock', 'pillar', 'fire'];
                     obstacles.push({
-                        x: canvas.width, y: groundY - 45, width: 38, height: 45, type: types[Math.floor(Math.random() * types.length)]
+                        x: canvas.width, y: groundY - 52, width: 44, height: 52, type: types[Math.floor(Math.random() * types.length)]
                     });
                 }
 
                 // Spawn coins / crystals
-                if (frame % 45 === 0) {
+                if (frame % 40 === 0) {
                     collectibles.push({
-                        x: canvas.width, y: groundY - (Math.random() > 0.5 ? 120 : 50), width: 28, height: 28, collected: false, type: Math.random() > 0.7 ? 'crystal' : 'coin'
+                        x: canvas.width, y: groundY - (Math.random() > 0.5 ? 130 : 60), width: 32, height: 32, collected: false, type: Math.random() > 0.65 ? 'crystal' : 'coin'
                     });
                 }
 
@@ -453,7 +466,7 @@
                 for (let i = obstacles.length - 1; i >= 0; i--) {
                     let obs = obstacles[i];
                     obs.x -= speed;
-                    if (duck.x < obs.x + obs.width - 10 && duck.x + duck.width - 10 > obs.x && duck.y < obs.y + obs.height - 8 && duck.y + duck.height - 8 > obs.y) {
+                    if (duck.x < obs.x + obs.width - 12 && duck.x + duck.width - 12 > obs.x && duck.y < obs.y + obs.height - 10 && duck.y + duck.height - 10 > obs.y) {
                         highScore = Math.max(highScore, score);
                         document.getElementById('final-score').innerText = score.toLocaleString();
                         document.getElementById('best-score').innerText = highScore.toLocaleString();
@@ -479,13 +492,13 @@
                 // Update clouds
                 clouds.forEach(c => {
                     c.x -= c.speed;
-                    if (c.x + c.size < 0) c.x = canvas.width + 60;
+                    if (c.x + c.size < 0) c.x = canvas.width + 80;
                 });
 
                 // Update particles
                 for (let i = particles.length - 1; i >= 0; i--) {
                     let p = particles[i];
-                    p.x += p.vx; p.y += p.vy; p.alpha -= 0.03;
+                    p.x += p.vx; p.y += p.vy; p.alpha -= 0.025;
                     if (p.alpha <= 0) particles.splice(i, 1);
                 }
 
@@ -510,18 +523,18 @@
 
                 // Ground & Water Line
                 ctx.fillStyle = '#06b6d4';
-                ctx.fillRect(0, groundY, canvas.width, 5);
-                let groundGrad = ctx.createLinearGradient(0, groundY + 5, 0, canvas.height);
+                ctx.fillRect(0, groundY, canvas.width, 6);
+                let groundGrad = ctx.createLinearGradient(0, groundY + 6, 0, canvas.height);
                 groundGrad.addColorStop(0, '#0e1a30');
                 groundGrad.addColorStop(1, '#050b14');
                 ctx.fillStyle = groundGrad;
-                ctx.fillRect(0, groundY + 5, canvas.width, canvas.height - groundY);
+                ctx.fillRect(0, groundY + 6, canvas.width, canvas.height - groundY);
 
                 // Obstacles
                 obstacles.forEach(obs => {
                     ctx.fillStyle = obs.type === 'rock' ? '#334155' : '#0284c7';
                     ctx.beginPath();
-                    ctx.roundRect(obs.x, obs.y, obs.width, obs.height, 8);
+                    ctx.roundRect(obs.x, obs.y, obs.width, obs.height, 10);
                     ctx.fill();
                 });
 
@@ -529,11 +542,11 @@
                 collectibles.forEach(col => {
                     ctx.fillStyle = col.type === 'crystal' ? '#38bdf8' : '#fbbf24';
                     ctx.beginPath();
-                    ctx.arc(col.x + 14, col.y + 14, 13, 0, Math.PI * 2);
+                    ctx.arc(col.x + 16, col.y + 16, 15, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.fillStyle = '#000';
-                    ctx.font = 'bold 12px sans-serif';
-                    ctx.fillText(col.type === 'crystal' ? '💎' : '🪙', col.x + 4, col.y + 18);
+                    ctx.font = 'bold 14px sans-serif';
+                    ctx.fillText(col.type === 'crystal' ? '💎' : '🪙', col.x + 5, col.y + 21);
                 });
 
                 // Particles
@@ -546,28 +559,28 @@
                     ctx.globalAlpha = 1;
                 });
 
-                // Player Duck
+                // Player Duck (Big & Crisp)
                 ctx.fillStyle = '#facc15';
                 ctx.strokeStyle = '#ca8a04';
-                ctx.lineWidth = 2.5;
+                ctx.lineWidth = 3;
                 ctx.beginPath();
-                ctx.ellipse(duck.x + 27, duck.y + 27, 24, 20, 0, 0, Math.PI * 2);
+                ctx.ellipse(duck.x + 32, duck.y + 32, 28, 24, 0, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.stroke();
 
                 ctx.beginPath();
-                ctx.arc(duck.x + 40, duck.y + 15, 15, 0, Math.PI * 2);
+                ctx.arc(duck.x + 48, duck.y + 18, 17, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.stroke();
 
                 ctx.fillStyle = '#f97316';
                 ctx.beginPath();
-                ctx.ellipse(duck.x + 52, duck.y + 16, 9, 5, 0, 0, Math.PI * 2);
+                ctx.ellipse(duck.x + 62, duck.y + 19, 11, 6, 0, 0, Math.PI * 2);
                 ctx.fill();
 
                 ctx.fillStyle = '#000';
                 ctx.beginPath();
-                ctx.arc(duck.x + 44, duck.y + 11, 3, 0, Math.PI * 2);
+                ctx.arc(duck.x + 52, duck.y + 13, 3.5, 0, Math.PI * 2);
                 ctx.fill();
             }
             requestAnimationFrame(gameLoop);
