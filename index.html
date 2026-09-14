@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +6,12 @@
     <title>DUCK — The Duck Has Landed on SUI 🦆💧</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Framer Motion CDN -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        /* Global Reset to prevent left/right offset bugs */
         * {
             box-sizing: border-box;
         }
@@ -19,6 +21,7 @@
             margin: 0;
             padding: 0;
         }
+        /* Perfectly balanced responsive game container */
         #game-container {
             width: 100%;
             max-width: 1050px;
@@ -34,10 +37,12 @@
 </head>
 <body class="min-h-screen bg-[#070b12] text-white font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden relative">
     
+    <!-- Background Ambient Glows & Floating Bubbles -->
     <div class="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
     <div class="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[150px] pointer-events-none -z-10"></div>
     <div class="absolute bottom-1/4 left-1/3 w-80 h-80 bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
 
+    <!-- Navigation Bar (Symmetrical Center-aligned content) -->
     <nav class="sticky top-0 z-50 backdrop-blur-xl bg-[#070b12]/90 border-b border-white/10 px-4 sm:px-8 py-4 w-full">
         <div class="w-full max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -62,16 +67,21 @@
                 <a href="https://x.com/Duckonsui" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/15 transition-all text-gray-300 hover:text-cyan-400">
                     <i data-lucide="twitter" class="w-4 h-4"></i>
                 </a>
-                <a href="https://t.me/SuiDucks" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 font-bold text-white shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:shadow-[0_0_25px_rgba(59,130,246,0.7)] transition-all transform hover:-translate-y-0.5 text-sm flex items-center gap-2">
-                    <i data-lucide="send" class="w-4 h-4"></i> TELEGRAM
+                <a href="https://t.me/SuiDucks" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/15 transition-all text-gray-300 hover:text-cyan-400">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                </a>
+                <a href="https://suipump.org/token/0xe9d71b29305d5530bcbb6636ac8cbcc04d32b358b83d84a09ae2142799a3f4b2" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_25px_rgba(6,182,212,0.7)] transition-all transform hover:-translate-y-0.5 text-sm flex items-center gap-2">
+                    <i data-lucide="shopping-cart" class="w-4 h-4 fill-black"></i> BUY $DUCK
                 </a>
             </div>
 
+            <!-- Mobile Menu Toggle Button -->
             <button id="menu-toggle" class="md:hidden p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:text-cyan-400 focus:outline-none">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
 
+        <!-- Mobile Dropdown Menu -->
         <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 mt-4 pt-4 pb-6 flex flex-col gap-3 px-2 bg-[#070b12]/95 backdrop-blur-2xl rounded-2xl w-full">
             <a href="#hero" class="mobile-link text-gray-300 hover:text-cyan-400 py-2.5 px-3 rounded-xl hover:bg-white/5 text-base font-medium">Home</a>
             <a href="#token" class="mobile-link text-gray-300 hover:text-cyan-400 py-2.5 px-3 rounded-xl hover:bg-white/5 text-base font-medium">Tokenomics</a>
@@ -83,21 +93,24 @@
                 <a href="https://x.com/Duckonsui" target="_blank" rel="noreferrer" class="py-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2 text-sm font-bold text-gray-200">
                     <i data-lucide="twitter" class="w-4 h-4 text-cyan-400"></i> X
                 </a>
-                <a href="https://t.me/SuiDucks" target="_blank" rel="noreferrer" class="py-3 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center gap-2 text-sm font-bold text-blue-300">
-                    <i data-lucide="send" class="w-4 h-4 text-blue-400"></i> Telegram
+                <a href="https://t.me/SuiDucks" target="_blank" rel="noreferrer" class="py-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2 text-sm font-bold text-gray-200">
+                    <i data-lucide="send" class="w-4 h-4 text-cyan-400"></i> Telegram
                 </a>
             </div>
         </div>
     </nav>
 
+    <!-- HERO SECTION (Centered perfectly on all devices) -->
     <section id="hero" class="relative min-h-[85vh] flex items-center justify-center px-4 sm:px-6 py-12 sm:py-16 w-full">
         <div class="w-full max-w-4xl mx-auto text-center flex flex-col items-center justify-center">
             
+            <!-- Sui Badge -->
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-bold tracking-wider mb-6 shadow-[0_0_20px_rgba(6,182,212,0.2)]">
                 <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
                 🟦 BUILT ON SUI
             </div>
 
+            <!-- Floating Logo with Glow -->
             <div class="relative mb-6 group flex justify-center w-full">
                 <div class="absolute w-32 h-32 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 blur-2xl opacity-50"></div>
                 <div class="relative w-32 h-32 sm:w-36 sm:h-36 rounded-3xl overflow-hidden border-4 border-cyan-400/50 shadow-[0_0_40px_rgba(6,182,212,0.5)] bg-slate-900 animate-bounce">
@@ -105,6 +118,7 @@
                 </div>
             </div>
 
+            <!-- Main Titles -->
             <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight mb-3">DUCK</h1>
             <div class="text-lg sm:text-2xl md:text-3xl font-extrabold text-cyan-300 mb-4 flex items-center justify-center gap-2 flex-wrap px-2">
                 The Duck Has Landed on SUI. 🦆💧
@@ -113,12 +127,16 @@
                 A legendary duck, a chaotic community, and one mission — take DUCK to the moon.
             </p>
 
+            <!-- Action Buttons -->
             <div class="flex flex-col gap-3 w-full max-w-md px-2">
-                <a href="#game" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 font-extrabold text-black shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:shadow-[0_0_35px_rgba(6,182,212,0.8)] transition-all transform hover:-translate-y-0.5 text-center text-sm tracking-wide flex items-center justify-center gap-2">
-                    <i data-lucide="gamepad-2" class="w-4 h-4 fill-black"></i> PLAY DUCK GAME
+                <a href="https://suipump.org/token/0xe9d71b29305d5530bcbb6636ac8cbcc04d32b358b83d84a09ae2142799a3f4b2" target="_blank" rel="noopener noreferrer" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 font-bold text-black shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:shadow-[0_0_35px_rgba(6,182,212,0.8)] transition-all transform hover:-translate-y-0.5 text-center text-sm tracking-wide flex items-center justify-center gap-2">
+                    <i data-lucide="shopping-cart" class="w-4 h-4 fill-black"></i> BUY $DUCK
+                </a>
+                <a href="#game" class="w-full py-4 px-6 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 hover:border-cyan-400/50 font-bold text-white transition-all transform hover:-translate-y-0.5 text-center text-sm tracking-wide backdrop-blur-md flex items-center justify-center gap-2">
+                    <i data-lucide="gamepad-2" class="w-4 h-4 text-cyan-400"></i> PLAY DUCK GAME
                 </a>
                 <div class="grid grid-cols-2 gap-3 w-full">
-                    <a href="https://t.me/SuiDucks" target="_blank" rel="noopener noreferrer" class="py-3.5 px-4 rounded-2xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 font-bold text-blue-300 transition-all text-center text-sm flex items-center justify-center gap-2">
+                    <a href="https://t.me/SuiDucks" target="_blank" rel="noopener noreferrer" class="py-3.5 px-4 rounded-2xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 font-bold text-blue-300 transition-all text-center text-sm flex items-center justify-center gap-2">
                         <i data-lucide="send" class="w-4 h-4"></i> TELEGRAM
                     </a>
                     <a href="https://x.com/Duckonsui" target="_blank" rel="noopener noreferrer" class="py-3.5 px-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 font-bold text-white transition-all text-center text-sm flex items-center justify-center gap-2">
@@ -129,6 +147,7 @@
         </div>
     </section>
 
+    <!-- WHY DUCK SECTION -->
     <section class="py-12 sm:py-16 px-4 sm:px-6 w-full max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 backdrop-blur-xl relative group overflow-hidden shadow-xl">
@@ -151,13 +170,14 @@
         </div>
     </section>
 
+    <!-- TOKEN SECTION -->
     <section id="token" class="py-12 sm:py-16 px-4 sm:px-6 w-full max-w-5xl mx-auto">
         <div class="text-center mb-10">
             <h2 class="text-3xl md:text-4xl font-black mb-3 tracking-tight">$DUCK TOKEN</h2>
             <p class="text-gray-400 text-sm px-2">Transparent tokenomics designed for maximum community upside.</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
             <div class="p-5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex items-center justify-between">
                 <span class="text-gray-400 text-sm font-medium">Token Name</span>
                 <span class="font-bold text-white text-base">$DUCK</span>
@@ -175,8 +195,20 @@
                 <span class="font-bold text-white text-base">Fair & Community Driven</span>
             </div>
         </div>
+
+        <!-- Contract Address Box -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-blue-600/10 to-purple-600/10 border border-cyan-500/30 backdrop-blur-xl text-center shadow-2xl">
+            <h3 class="text-xs font-bold text-cyan-400 tracking-widest uppercase mb-3">Contract Address</h3>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 bg-black/40 p-4 rounded-2xl border border-white/10 max-w-3xl mx-auto">
+                <span id="ca-text" class="font-mono text-xs sm:text-sm font-bold tracking-wider text-white break-all">0x7930f3125ee097cd148c914aefef3fcbb1a4d3f232c227a372c6e0e2f6cb74ec::suipump::SUIPUMP</span>
+                <a href="https://suipump.org/token/0xe9d71b29305d5530bcbb6636ac8cbcc04d32b358b83d84a09ae2142799a3f4b2" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-cyan-500 text-black font-bold text-xs hover:bg-cyan-400 transition-colors flex-shrink-0 flex items-center gap-1.5">
+                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i> View
+                </a>
+            </div>
+        </div>
     </section>
 
+    <!-- DUCK GAME SECTION -->
     <section id="game" class="py-12 sm:py-16 px-4 sm:px-6 w-full flex flex-col items-center justify-center">
         <div class="text-center mb-6 px-4 max-w-4xl mx-auto">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-bold mb-3">
@@ -187,6 +219,7 @@
         </div>
 
         <div class="w-full max-w-[1050px] mx-auto rounded-3xl bg-slate-900/95 border border-cyan-500/30 backdrop-blur-2xl overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.2)] relative">
+            <!-- Game Header HUD -->
             <div class="flex items-center justify-between px-4 sm:px-6 py-3.5 bg-black/80 border-b border-white/10 text-xs sm:text-sm font-bold">
                 <div class="flex items-center gap-2 text-cyan-400">
                     <i data-lucide="gamepad-2" class="w-4 h-4"></i> 🦆 DUCK RUN
@@ -198,9 +231,11 @@
                 </div>
             </div>
 
+            <!-- Perfectly Centered Responsive Canvas Viewport -->
             <div id="game-container" class="relative w-full bg-[#0b1329] flex items-center justify-center overflow-hidden touch-none select-none">
                 <canvas id="duckCanvas" width="1100" height="480" class="w-full h-full object-fill block mx-auto"></canvas>
 
+                <!-- START SCREEN OVERLAY -->
                 <div id="start-overlay" class="absolute inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center z-20">
                     <div class="w-20 h-20 rounded-2xl overflow-hidden border-2 border-cyan-400/50 shadow-[0_0_20px_rgba(6,182,212,0.6)] mb-4">
                         <img src="https://i.imgur.com/ZctdcjE.jpeg" alt="Logo" class="w-full h-full object-cover">
@@ -212,6 +247,7 @@
                     </button>
                 </div>
 
+                <!-- GAME OVER OVERLAY -->
                 <div id="gameover-overlay" class="absolute inset-0 bg-black/90 backdrop-blur-md hidden flex-col items-center justify-center p-6 text-center z-20">
                     <h3 class="text-2xl sm:text-4xl font-black text-red-400 mb-3">GAME OVER 🦆💀</h3>
                     <div class="flex gap-6 my-4 bg-white/5 p-4 rounded-xl border border-white/10">
@@ -230,6 +266,7 @@
                 </div>
             </div>
 
+            <!-- BIG MOBILE TOUCH CONTROLS BAR -->
             <div class="p-3 sm:p-4 bg-black/85 border-t border-white/10 flex items-center justify-between">
                 <div class="text-xs text-gray-400 hidden sm:block">Controls: <span class="text-cyan-400 font-bold">Space / Up Arrow</span> or tap button</div>
                 <button id="jump-btn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 active:scale-95 transition-transform font-black text-black text-base tracking-wider shadow-[0_0_25px_rgba(6,182,212,0.5)] flex items-center justify-center gap-2 cursor-pointer select-none">
@@ -239,6 +276,7 @@
         </div>
     </section>
 
+    <!-- ROADMAP SECTION -->
     <section id="roadmap" class="py-12 sm:py-16 px-4 sm:px-6 w-full max-w-5xl mx-auto">
         <div class="text-center mb-10">
             <h2 class="text-3xl md:text-4xl font-black mb-3 tracking-tight">ROADMAP</h2>
@@ -290,6 +328,7 @@
         </div>
     </section>
 
+    <!-- COMMUNITY SECTION -->
     <section class="py-12 sm:py-16 px-4 sm:px-6 w-full max-w-4xl mx-auto">
         <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-cyan-500/20 via-blue-600/10 to-purple-600/20 border border-cyan-500/30 backdrop-blur-2xl text-center relative overflow-hidden shadow-2xl">
             <h2 class="text-2xl sm:text-4xl font-black mb-3 tracking-tight">JOIN THE DUCK ARMY 🦆</h2>
@@ -298,13 +337,14 @@
                 <a href="https://x.com/Duckonsui" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white text-black font-extrabold hover:bg-cyan-100 transition-all text-xs sm:text-sm flex items-center justify-center gap-2">
                     <i data-lucide="twitter" class="w-4 h-4 fill-black"></i> FOLLOW ON X
                 </a>
-                <a href="https://t.me/SuiDucks" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-extrabold transition-all text-xs sm:text-sm flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.4)]">
-                    <i data-lucide="send" class="w-4 h-4 fill-white"></i> JOIN TELEGRAM
+                <a href="https://t.me/SuiDucks" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-extrabold transition-all text-xs sm:text-sm flex items-center justify-center gap-2">
+                    <i data-lucide="send" class="w-4 h-4 fill-black"></i> JOIN TELEGRAM
                 </a>
             </div>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="border-t border-white/10 bg-[#05080e] py-8 px-4 sm:px-6 w-full">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
             <div class="flex items-center justify-center md:justify-start gap-3">
@@ -320,7 +360,7 @@
                 <a href="https://x.com/Duckonsui" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400 text-xs font-bold flex items-center gap-1.5">
                     <i data-lucide="twitter" class="w-3.5 h-3.5"></i> X
                 </a>
-                <a href="https://t.me/SuiDucks" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-blue-600/20 border border-blue-500/30 hover:border-blue-400/50 hover:bg-blue-600/30 transition-all text-blue-300 hover:text-blue-200 text-xs font-bold flex items-center gap-1.5">
+                <a href="https://t.me/SuiDucks" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-gray-300 hover:text-cyan-400 text-xs font-bold flex items-center gap-1.5">
                     <i data-lucide="send" class="w-3.5 h-3.5"></i> Telegram
                 </a>
             </div>
@@ -330,6 +370,7 @@
         </div>
     </footer>
 
+    <!-- Interactive JavaScript for Lucide Icons & Balanced Game Engine -->
     <script>
         lucide.createIcons();
 
@@ -586,4 +627,3 @@
     </script>
 </body>
 </html>
-```
